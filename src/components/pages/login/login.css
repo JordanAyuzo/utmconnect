@@ -1,0 +1,16 @@
+.center-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Altura completa de la ventana */
+  }  
+  /* login.css */
+.full-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Altura completa de la ventana */
+    width: 100vw; /* Ancho completo de la ventana */
+    background-color: #f0f2f5; /* Cambia este color por el que prefieras */
+  }
+  
