@@ -13,7 +13,9 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:4000',
+        target: 'https://refactored-adventure-production.up.railway.app/',
+        secure: false,
+        changeOrigin: true,
       }
     }
   },

@@ -14,10 +14,10 @@ function NavbarAdmin() {
                     <Link Link to={'/homeAdmin'}
                         className="font-medium text-sm border-b-2 border-transparent transition-colors hover:text-gray-900 hover:border-gray-100 dark:hover:text-gray-50 dark:hover:border-gray-800"
                         >Inicio</Link>
-                        <Link to={'/'}
+                        <Link to={'/registerStudent'}
                             className="font-medium text-sm border-b-2 border-transparent transition-colors hover:text-gray-900 hover:border-gray-100 dark:hover:text-gray-50 dark:hover:border-gray-800"
                         >Alumnos</Link>
-                        <Link Link to={'/registerStudent'}
+                        <Link Link to={'/'}
                         className="font-medium text-sm border-b-2 border-transparent transition-colors hover:text-gray-900 hover:border-gray-100 dark:hover:text-gray-50 dark:hover:border-gray-800"
                         >Empresas</Link>
                         <Link to='/'

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Cookies from 'js-cookie';
 import "./login.css";
 import { ingresar } from '@/services/usuario/usuarioService';
 import { Button } from "@/components/ui/button";
@@ -12,12 +13,14 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
     const [usuario, setusuario] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -26,13 +29,17 @@ function Login() {
 
         try {
             const response = await ingresar(usuario, password);
-            if (response.success) {
-                console.log('Ingreso exitoso');
+            console.log(response.user);
+            if (response.access_token) {
+                Cookies.set('accessToken', response.access_token)
+                if(response.user.user_type == '0'){
+                    navigate('/homeAdmin')
+                } 
             } else {
                 setError(response.message || 'Error al ingresar');
             }
         } catch (error) {
-            setError('Error al ingresar');
+            setError('Error del servidor');
         } finally {
             setLoading(false);
         }
