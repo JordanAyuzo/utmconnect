@@ -14,5 +14,3 @@ function App() {
 }
 
 export default App
-//
-//npx shadcn-ui@latest add card
