@@ -60,10 +60,11 @@ function TableAlumnos() {
       </Table>
       <Pagination>
         <PaginationContent>
-          <PaginationPrevious>
+          <PaginationItem disabled={currentPage === 1}>
             <PaginationLink
               href="#"
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
                 if (currentPage > 1) {
                   paginate(currentPage - 1);
                 }
@@ -71,7 +72,7 @@ function TableAlumnos() {
             >
               Anterior
             </PaginationLink>
-          </PaginationPrevious>
+          </PaginationItem>
           {[...Array(Math.ceil(alumnos.length / alumnosPerPage)).keys()].map(
             (num) => (
               <PaginationItem key={num}>
@@ -81,10 +82,11 @@ function TableAlumnos() {
               </PaginationItem>
             )
           )}
-          <PaginationNext>
+          <PaginationItem disabled={currentPage === Math.ceil(alumnos.length / alumnosPerPage)}>
             <PaginationLink
               href="#"
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
                 if (currentPage < Math.ceil(alumnos.length / alumnosPerPage)) {
                   paginate(currentPage + 1);
                 }
@@ -92,7 +94,7 @@ function TableAlumnos() {
             >
               Siguiente
             </PaginationLink>
-          </PaginationNext>
+          </PaginationItem>
         </PaginationContent>
       </Pagination>
     </div>
