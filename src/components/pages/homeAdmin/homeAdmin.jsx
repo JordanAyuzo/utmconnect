@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import "./homeAdmin.css";
-import NavbarAdmin from '@/components/layouts/navbarAdmin/navbarAdmin';
+import NavbarAdmin from "@/components/layouts/navbarAdmin/navbarAdmin";
+import TableAlumnos from "@/components/layouts/tables/tableAlumnos";
+
 function HomeAdmin() {
-    return (
-        <div>
-        <NavbarAdmin/>
-        <h1>Esta es la pagina principal</h1>
-        </div>
-        
-    );
+  return (
+    <div>
+      <NavbarAdmin />
+      <TableAlumnos />
+    </div>
+  );
 }
 
 export default HomeAdmin;
