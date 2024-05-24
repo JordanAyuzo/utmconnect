@@ -21,11 +21,13 @@ export const register = async (csvFile) => {
     const formData = new FormData();
     formData.append("file", csvFile);
 
-    return await fetch(API.BASEURL + "/register", {
-      method: "POST",
-      body: formData,
-    }).then((res) => res.json());
-  } catch (e) {
-    // Manejo de errores
-  }
-};
+        return await fetch(API.BASEURL + "/student/upload", {
+            method: 'POST',
+            body: formData
+        })
+        .then((res) => res.json());
+    }
+    catch (e) {
+        // Manejo de errores
+    }
+}

@@ -13,7 +13,7 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, } from 'react-router-dom';
 
 function Login() {
     const [usuario, setusuario] = useState('');
@@ -29,7 +29,6 @@ function Login() {
 
         try {
             const response = await ingresar(usuario, password);
-            console.log(response.user);
             if (response.access_token) {
                 Cookies.set('accessToken', response.access_token)
                 if(response.user.user_type == '0'){
