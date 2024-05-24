@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import "./homeAdmin.css";
-import NavbarAdmin from '@/components/layouts/navbarAdmin/navbarAdmin';
+import NavbarAdmin from '@/components/layouts/navbar/navbarAdmin';
 function HomeAdmin() {
     return (
         <div>
