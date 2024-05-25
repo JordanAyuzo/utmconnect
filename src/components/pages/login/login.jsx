@@ -31,9 +31,13 @@ function Login() {
             const response = await ingresar(usuario, password);
             if (response.access_token) {
                 Cookies.set('accessToken', response.access_token)
+                sessionStorage.setItem('userNumber', response.user.user_number);
                 if(response.user.user_type == '0'){
                     navigate('/homeAdmin')
-                } 
+                }
+                if(response.user.user_type == '1'){
+                    navigate('/homestudent')
+                }  
             } else {
                 setError(response.message || 'Error al ingresar');
             }
