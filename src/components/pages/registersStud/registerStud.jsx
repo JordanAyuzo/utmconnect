@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCloudArrowUp } from '@fortawesome/free-solid-svg-icons'
+import React, { useState, useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCloudArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { register } from '@/services/usuario/usuarioService';
-import { faCircleCheck } from '@fortawesome/free-regular-svg-icons'
-import NavbarAdmin from '@/components/layouts/navbarAdmin/navbarAdmin';
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
+import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
+import NavbarAdmin from '@/components/layouts/navbar/navbarAdmin';
 import { Button } from "@/components/ui/button";
 import {
     Tabs,
@@ -21,11 +19,25 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { Progress } from "@/components/ui/progress"; // Importa el componente Progress
 import "./registerStud.css";
 
 function RegisterStud() {
     const [file, setFile] = useState(null);
     const [dragActive, setDragActive] = useState(false);
+    const [alertVisible, setAlertVisible] = useState(false);
+    const [responseMessage, setResponseMessage] = useState('');
+    const [loading, setLoading] = useState(false); // Estado para controlar la carga
+    const [progress, setProgress] = useState(0); // Estado para el progreso
 
     const handleDragEnter = (e) => {
         e.preventDefault();
@@ -59,16 +71,36 @@ function RegisterStud() {
         }
     };
 
-    const handleFileUpload = ()  => {
+    const handleFileUpload = async () => {
         console.log("Mostrando archivo");
         if (file) {
+            setLoading(true); // Inicia la carga
+            setProgress(0); // Reinicia el progreso
+            const interval = setInterval(() => {
+                setProgress((prev) => {
+                    if (prev >= 90) {
+                        clearInterval(interval); 
+                        return prev;
+                    }
+                    return prev + 95; // Incrementa el progreso
+                });
+            }, 500);
+
             const reader = new FileReader();
-            reader.onload =  async(e) => {
+            reader.onload = async (e) => {
                 const content = e.target.result;
                 console.log(content);
-                const response = await register(file);
-                console.log(response); // Manejar la respuesta según sea necesario
-                
+                try {
+                    const response = await register(file);
+                    console.log(response);
+                    setResponseMessage(response.message); // O ajusta esto según la estructura de tu respuesta
+                } catch (error) {
+                    setResponseMessage("Error al subir el archivo");
+                }
+                clearInterval(interval); // Detén la actualización
+                setProgress(100); // Completa el progreso
+                setLoading(false); // Termina la carga
+                setAlertVisible(true); // Muestra el AlertDialog
                 setFile(null);
             };
             reader.readAsText(file);
@@ -113,6 +145,11 @@ function RegisterStud() {
                                 <label htmlFor="file" className="cursor-pointer text-blue-500 underline">Seleccionar archivo</label>
                                 {file && <p className="text-sm text-gray-700 mt-2">{file.name}</p>}
                             </div>
+                            {loading && ( // Muestra el componente de carga mientras loading es true
+                                <div className="w-full flex justify-center mt-4">
+                                    <Progress value={progress} className="w-[60%]" /> {/* Usa el estado de progreso */}
+                                </div>
+                            )}
                         </CardContent>
                         <CardFooter className="flex justify-end">
                             <Button size="lg" disabled={!file} onClick={handleFileUpload}>Subir Archivo</Button>
@@ -136,6 +173,17 @@ function RegisterStud() {
                     </Card>
                 </TabsContent>
             </Tabs>
+
+            <AlertDialog open={alertVisible} onOpenChange={setAlertVisible}>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>{responseMessage}</AlertDialogTitle>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogAction onClick={() => setAlertVisible(false)}>Aceptar</AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </div>
     );
 }
