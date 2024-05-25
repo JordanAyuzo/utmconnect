@@ -3,7 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCloudArrowUp } from '@fortawesome/free-solid-svg-icons'
 import { register } from '@/services/usuario/usuarioService';
 import { faCircleCheck } from '@fortawesome/free-regular-svg-icons'
-import NavbarAdmin from '@/components/layouts/navbarAdmin/navbarAdmin';
+import NavbarAdmin from '@/components/layouts/navbar/navbarAdmin';
+import TableAdministrador from "@/components/layouts/tables/tableAdministrador";
 import './registerAdmin.css'
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -93,6 +94,7 @@ function registerAdmin() {
                         </CardDescription>
                     </Card>
                 </TabsContent>
+                <TableAdministrador/>
                 <TabsContent value="delete" className="flex justify-center">
                     <Card className="w-full mx-auto m-4 ring-gray-100 ring-1 ring-opacity-20 shadow-2xl">
                         <CardHeader>
