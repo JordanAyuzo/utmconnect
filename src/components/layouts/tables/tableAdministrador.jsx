@@ -26,9 +26,9 @@ function TableAdministrador() {
       <h2 className="scroll-m-20 border-b pb-2 text-3xl text-center font-semibold tracking-tight first:mt-0">
         Lista de administradores
       </h2>
-      <Table>
+      <Table className="border border-gray-400">
         <TableHeader>
-          <TableRow>
+          <TableRow className="border border-gray-400">
           <TableHead className="text-center">Número de trabajador</TableHead>
             <TableHead className="text-center">Nombre</TableHead>
             <TableHead className="text-center">A. paterno</TableHead>
@@ -39,7 +39,7 @@ function TableAdministrador() {
         </TableHeader>
         <TableBody>
           {currentAdministrador.map((customers) => (
-            <TableRow key={customers.name}>
+            <TableRow key={customers.name} className="border border-gray-400">
               <TableCell className="font-medium">{customers.user_number}</TableCell>
               <TableCell className="font-medium">{customers.name}</TableCell>
               <TableCell className="font-medium">{customers.paternal_sn}</TableCell>

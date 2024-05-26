@@ -84,14 +84,14 @@ function registerAdmin() {
                 </TabsContent>
                 
                 <TabsContent value="delete" className="flex justify-center">
-                    <Card className="w-full mx-auto m-4 ring-gray-100 ring-1 ring-opacity-20 shadow-2xl">
-                        <CardHeader>
+                    <Card className=" w-full mx-auto m-4 ring-gray-100 ring-1 ring-opacity-20 shadow-2xl">
+                        <CardHeader >
                             <CardTitle>Registro de adminstrador</CardTitle>
                             <CardDescription>
                                 Apartado para registrar a un administrador.
                             </CardDescription>
                             <div className="flex justify-center items-center">
-                            <Card className="w-[450px]">
+                            <Card className="border border-gray-400 w-[450px]">
                             <CardHeader>
                                 <CardTitle>Registrar adminstrador</CardTitle>
                                 <CardDescription>Rellena la siguiente información</CardDescription>
@@ -99,19 +99,19 @@ function registerAdmin() {
                             <CardContent >
                                 <form onSubmit={handleSubmit}>
                                 <div className="grid w-full items-center gap-4">
-                                    <div className="flex flex-col space-y-1.5">
+                                    <div className=" flex flex-col space-y-1.5">
                                     <Label htmlFor="user_number">Número del trabajador</Label>
-                                    <Input id="user_number" placeholder="Ingresa el número del trabajador" value={user_number} onChange={(e) => setusernumber(e.target.value)}/>
+                                    <Input className="border border-gray-400" id="user_number" placeholder="Ingresa el número del trabajador" value={user_number} onChange={(e) => setusernumber(e.target.value)}/>
                                     <Label htmlFor="name">Nombre completo</Label>
-                                    <Input id="name" placeholder="Nombre(s)" value={name} onChange={(e) => setname(e.target.value)}/>                                    
-                                    <Input id="paternal_sn" placeholder="Ingresa el apellido paterno" value={paternal_sn} onChange={(e) => setpaternalsn(e.target.value)}/>                                    
-                                    <Input id="maternal_sn" placeholder="Ingresa el apellido materno" value={maternal_sn} onChange={(e) => setmaternalsn(e.target.value)}/>
+                                    <Input className="border border-gray-400" id="name" placeholder="Nombre(s)" value={name} onChange={(e) => setname(e.target.value)}/>                                    
+                                    <Input className="border border-gray-400" id="paternal_sn" placeholder="Ingresa el apellido paterno" value={paternal_sn} onChange={(e) => setpaternalsn(e.target.value)}/>                                    
+                                    <Input className="border border-gray-400" id="maternal_sn" placeholder="Ingresa el apellido materno" value={maternal_sn} onChange={(e) => setmaternalsn(e.target.value)}/>
                                     <Label htmlFor="correo">Correo electrónico</Label>
-                                    <Input id="correo" placeholder="Ingresa tu correo electrónico" value={email} onChange={(e) => setemail(e.target.value)}/>
+                                    <Input className="border border-gray-400" id="correo" placeholder="Ingresa tu correo electrónico" value={email} onChange={(e) => setemail(e.target.value)}/>
                                     <Label htmlFor="password">Contraseña</Label>
-                                    <Input id="password" placeholder="Ingresa su contraseña" value={password} onChange={(e) => setpassword(e.target.value)}/>
+                                    <Input className="border border-gray-400" id="password" placeholder="Ingresa su contraseña" value={password} onChange={(e) => setpassword(e.target.value)}/>
                                     <Label htmlFor="acces_date">Fecha</Label>
-                                    <Input id="acces_date" placeholder="Ingresa la fecha" value={accesDate} onChange={(e) => setAccesDate(e.target.value)} dateFormat="dd/MM/yyyy"/>
+                                    <Input className="border border-gray-400" id="acces_date" placeholder="Ingresa la fecha" value={accesDate} onChange={(e) => setAccesDate(e.target.value)} dateFormat="dd/MM/yyyy"/>
                                     </div>
                                     {error && <div className="text-red-500">{error}</div>}
                                     <Button className="w-full" type="submit" disabled={loading}>
