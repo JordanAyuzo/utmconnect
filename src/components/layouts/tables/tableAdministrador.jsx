@@ -10,10 +10,10 @@ function TableAdministrador() {
   const administradorPerPage = 4;
 
   useEffect(() => {
-    getAdministrador().then((res) => {
+    obtenerAdmin(userId).then((res) => {
       setAdministrador(res);
     });
-  }, []);
+}, [userId]);
 
   const indexOfLastAdministrador = currentPage * administradorPerPage;
   const indexOfFirstAdministrador = indexOfLastAdministrador - administradorPerPage;

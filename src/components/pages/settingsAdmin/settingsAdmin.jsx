@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import NavbarAdmin from "@/components/layouts/navbar/navbarAdmin";
+import { obtenerAdmin } from '@/services/administrador/administradorService';
 import {
     Card,
     CardContent,
@@ -23,6 +24,20 @@ import {
     DialogTrigger,
   } from "@/components/ui/dialog"
 function SettingsAdmin() {
+    const [adminInfo, setAdminInfo] = useState([]);
+    const [user_number, setusernumber] = useState('');
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const data = await obtenerAdmin(user_number);
+            if (data) {
+                setAdminInfo(data); // Actualiza el estado con los datos del usuario
+            }
+        };
+
+        fetchData();
+    }, []);
+
     return (
         <div>
             <NavbarAdmin />
@@ -68,25 +83,25 @@ function SettingsAdmin() {
                                     <div className="grid grid-cols-3 items-start gap-6">
                                         <div className="space-y-2">
                                         <Label htmlFor="name">Nombre(s)</Label>
-                                        <Input id="name" placeholder="Emmanuel Guadalupe"/>
+                                        <Input id="name" readOnly/>
                                         </div>
                                         <div className="space-y-2">
                                         <Label htmlFor="paternal_sn">Apellido paterno</Label>
-                                        <Input id="paternal_sn" placeholder="Robles"/>
+                                        <Input id="paternal_sn" readOnly/>
                                         </div>
                                         <div className="space-y-2">
                                         <Label htmlFor="maternal_sn">Apellido materno</Label>
-                                        <Input id="maternal_sn" placeholder="Esparza"/>
+                                        <Input id="maternal_sn" readOnly/>
                                         </div>
                                     </div>
                                     <div className="grid grid-cols-2 items-start gap-6">
                                     <div className="space-y-2">
                                         <Label htmlFor="user_number">Número de trabajador</Label>
-                                        <Input id="user_number" placeholder="1234567890"/>
+                                        <Input id="user_number" readOnly/>
                                         </div>
                                         <div className="space-y-2">
                                         <Label htmlFor="paternal_sn">Correo electrónico</Label>
-                                        <Input id="paternal_sn" placeholder="soylamerareata@gs.utm.mx"/>
+                                        <Input id="paternal_sn" readOnly/>
                                         </div>
                                     </div>
                                 </CardContent>
