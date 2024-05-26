@@ -5,6 +5,7 @@ import { register } from '@/services/usuario/usuarioService';
 import { faCircleCheck } from '@fortawesome/free-regular-svg-icons'
 import NavbarAdmin from '@/components/layouts/navbar/navbarAdmin';
 import TableAdministrador from "@/components/layouts/tables/tableAdministrador";
+import { registerAdmins } from '@/services/administrador/administradorService';
 import './registerAdmin.css'
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -22,62 +23,47 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-
-import { Password } from 'primereact/password';
-
-        
+import { Button } from "@/components/ui/button"
+import { useNavigate, } from 'react-router-dom';
 import './registerAdmin.css'
 
 function registerAdmin() {
+    const [user_number, setusernumber] = useState('');
+    const [name, setname] = useState('');
+    const [paternal_sn, setpaternalsn] = useState('');
+    const [maternal_sn, setmaternalsn] = useState('');
+    const [email, setemail] = useState('');
+    const [password, setpassword] = useState('');
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [accesDate, setAccesDate] = useState('');     
+    const navigate = useNavigate();
 
-
-    const handleDragEnter = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        e.stopPropagation();
-        setDragActive(true);
-    };
+        setLoading(true);
+        setError('');
 
-    const handleDragLeave = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        setDragActive(false);
-    };
-
-    const handleDragOver = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-    };
-
-    const handleDrop = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        setDragActive(false);
-        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-            setFile(e.dataTransfer.files[0]);
+        try {
+          const response = await registerAdmins(user_number, name, paternal_sn, maternal_sn, email, password, accesDate);
+          if (response.ok) {
+            alert('Administrador registrado exitosamente');
+            // Ir a la lista de administradores
+            navigate('/registerAdmin')
+          } else {
+            setError(response.message || 'Error al registrar el administrador');
+          }
+        if (!response.ok) {
+      throw new Error(`HTTP error status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (e) {
+    console.error(e);
+    throw e; // O maneja el error de manera adecuada
+  } finally {
+            setLoading(false);
         }
-    };
-
-    const handleChange = (e) => {
-        if (e.target.files && e.target.files[0]) {
-            setFile(e.target.files[0]);
-        }
-    };
-
-    const handleFileUpload = ()  => {
-        console.log("Mostrando archivo");
-        if (file) {
-            const reader = new FileReader();
-            reader.onload =  async(e) => {
-                const content = e.target.result;
-                console.log(content);
-                const response = await register(file);
-                console.log(response); // Manejar la respuesta según sea necesario
-                
-                setFile(null);
-            };
-            reader.readAsText(file);
-        }
-    };
+      };
 
     return (
         <div>
@@ -92,9 +78,11 @@ function registerAdmin() {
                         <CardDescription className="p-4">
                             En esta sección se visualiza la lista de administradores registrados en el sistema.
                         </CardDescription>
+                        <TableAdministrador/>
                     </Card>
+                    
                 </TabsContent>
-                <TableAdministrador/>
+                
                 <TabsContent value="delete" className="flex justify-center">
                     <Card className="w-full mx-auto m-4 ring-gray-100 ring-1 ring-opacity-20 shadow-2xl">
                         <CardHeader>
@@ -102,24 +90,38 @@ function registerAdmin() {
                             <CardDescription>
                                 Apartado para registrar a un administrador.
                             </CardDescription>
-                            <Card className="w-[400px]">
+                            <div className="flex justify-center items-center">
+                            <Card className="w-[450px]">
                             <CardHeader>
                                 <CardTitle>Registrar adminstrador</CardTitle>
                                 <CardDescription>Rellena la siguiente información</CardDescription>
                             </CardHeader>
-                            <CardContent>
-                                <form>
+                            <CardContent >
+                                <form onSubmit={handleSubmit}>
                                 <div className="grid w-full items-center gap-4">
                                     <div className="flex flex-col space-y-1.5">
-                                    <Label htmlFor="name">Nombre</Label>
-                                    <Input id="name" placeholder="Ingresa tu nombre completo" />
+                                    <Label htmlFor="user_number">Número del trabajador</Label>
+                                    <Input id="user_number" placeholder="Ingresa el número del trabajador" value={user_number} onChange={(e) => setusernumber(e.target.value)}/>
+                                    <Label htmlFor="name">Nombre completo</Label>
+                                    <Input id="name" placeholder="Nombre(s)" value={name} onChange={(e) => setname(e.target.value)}/>                                    
+                                    <Input id="paternal_sn" placeholder="Ingresa el apellido paterno" value={paternal_sn} onChange={(e) => setpaternalsn(e.target.value)}/>                                    
+                                    <Input id="maternal_sn" placeholder="Ingresa el apellido materno" value={maternal_sn} onChange={(e) => setmaternalsn(e.target.value)}/>
                                     <Label htmlFor="correo">Correo electrónico</Label>
-                                    <Input id="correo" placeholder="Ingresa tu correo electrónico" />
+                                    <Input id="correo" placeholder="Ingresa tu correo electrónico" value={email} onChange={(e) => setemail(e.target.value)}/>
+                                    <Label htmlFor="password">Contraseña</Label>
+                                    <Input id="password" placeholder="Ingresa su contraseña" value={password} onChange={(e) => setpassword(e.target.value)}/>
+                                    <Label htmlFor="acces_date">Fecha</Label>
+                                    <Input id="acces_date" placeholder="Ingresa la fecha" value={accesDate} onChange={(e) => setAccesDate(e.target.value)} dateFormat="dd/MM/yyyy"/>
                                     </div>
+                                    {error && <div className="text-red-500">{error}</div>}
+                                    <Button className="w-full" type="submit" disabled={loading}>
+                                        {loading ? 'registrando...' : 'Registrar'}
+                                    </Button>
                                 </div>
                                 </form>
                             </CardContent>
                             </Card>
+                            </div>
                         </CardHeader>
                     </Card>
                 </TabsContent>

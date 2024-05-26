@@ -12,6 +12,14 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+  } from "@/components/ui/dialog"
 import NavbarStud from "@/components/layouts/navbar/navbarStud";
 
 function SettingStud() {
@@ -44,6 +52,21 @@ function SettingStud() {
                         </nav>
                     </div>
                 </div>
+            </div>
+
+            <div>
+            <Dialog>
+                <DialogTrigger></DialogTrigger>INformacion del Administrador
+                <DialogContent>
+                    <DialogHeader>
+                    <DialogTitle>Are you absolutely sure?</DialogTitle>
+                    <DialogDescription>
+                        This action cannot be undone. This will permanently delete your account
+                        and remove your data from our servers.
+                    </DialogDescription>
+                    </DialogHeader>
+                </DialogContent>
+                </Dialog>
             </div>
 
             <div className="flex flex-col">

@@ -29,31 +29,28 @@ function TableAdministrador() {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">Nombre completo</TableHead>
-            <TableHead>Correo electrónico</TableHead>
-            <TableHead>Contraseña</TableHead>
+          <TableHead className="text-center">Número de trabajador</TableHead>
+            <TableHead className="text-center">Nombre</TableHead>
+            <TableHead className="text-center">A. paterno</TableHead>
+            <TableHead className="text-center">A. materno</TableHead>
+            <TableHead className="text-center">Correo electrónico</TableHead>
             <TableHead className="text-center">Acción</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {currentAdministrador.map((customers) => (
             <TableRow key={customers.name}>
+              <TableCell className="font-medium">{customers.user_number}</TableCell>
               <TableCell className="font-medium">{customers.name}</TableCell>
+              <TableCell className="font-medium">{customers.paternal_sn}</TableCell>
+              <TableCell className="font-medium">{customers.maternal_sn}</TableCell>
               <TableCell>{customers.email}</TableCell>
-              <TableCell>{customers.password}</TableCell>
               <TableCell className="text-center">
                 <Button variant="destructive">Eliminar</Button>
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TableCell colSpan="5" className="text-right">
-              <Button variant="primary">Agregar Administrador</Button>
-            </TableCell>
-          </TableRow>
-        </TableFooter>
       </Table>
       <Pagination>
         <PaginationContent>

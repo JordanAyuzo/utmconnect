@@ -5,6 +5,7 @@ import HomeAdmin from './components/pages/homeAdmin/homeAdmin.jsx';
 import RegisterStud from './components/pages/registersStud/registerStud.jsx';
 import RegisterAdmin from './components/pages/registerAdmin/registerAdmin.jsx';
 import SettingStud from './components/pages/settingStud/settingStud.jsx';
+import SettingsAdmin from './components/pages/settingsAdmin/settingsAdmin.jsx';
 
 function RoutesComponent() {
     return (
@@ -15,6 +16,7 @@ function RoutesComponent() {
                     <Route path="/registerStudent" element={<RegisterStud/>}/>
                     <Route path="/registerAdmin" element={<RegisterAdmin/>}/>
                     <Route path="/settingsStudent" element={<SettingStud/>}/>
+                    <Route path="/settingsAdmin" element={<SettingsAdmin/>}/>
                 </Routes>
         </div>
     );
