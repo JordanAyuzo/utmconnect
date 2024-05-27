@@ -6,6 +6,7 @@ import HomeStud from './components/pages/homeStudent/homeStud.jsx';
 import RegisterStud from './components/pages/registersStud/registerStud.jsx';
 import SettingStud from './components/pages/settingStud/settingStud.jsx';
 import PageEmpresas from './components/pages/pageEmpresas/pageEmpresas.jsx';
+import RegisterEmpresa from './components/pages/registerEmpresas/registerEmpresa.jsx';
 
 function RoutesComponent() {
     return (
@@ -17,6 +18,7 @@ function RoutesComponent() {
                     <Route path="/registerStudent" element={<RegisterStud/>}/>
                     <Route path="/settingsStudent" element={<SettingStud/>}/>
                     <Route path="/pageEmpresas" element={<PageEmpresas/>}/>
+                    <Route path="/registerEmpresa" element={<RegisterEmpresa/>}/>
                 </Routes>
         </div>
     );

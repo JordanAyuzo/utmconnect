@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCloudArrowUp } from '@fortawesome/free-solid-svg-icons';
-import { uploadCV } from '@/services/alumnos/alumnoService';
+import { getCV, uploadCV } from '@/services/alumnos/alumnoService';
 import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
 import { Button } from "@/components/ui/button";
 import {
@@ -19,15 +19,32 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Progress } from "@/components/ui/progress"; // Importa el componente Progress
+import { Progress } from "@/components/ui/progress";
 
 function CardUploadCV() {
     const [file, setFile] = useState(null);
     const [dragActive, setDragActive] = useState(false);
     const [alertVisible, setAlertVisible] = useState(false);
     const [responseMessage, setResponseMessage] = useState('');
-    const [loading, setLoading] = useState(false); // Estado para controlar la carga
-    const [progress, setProgress] = useState(0); // Estado para el progreso
+    const [loading, setLoading] = useState(false);
+    const [progress, setProgress] = useState(0);
+    const [cvLink, setCvLink] = useState('');
+    const [uploadMode, setUploadMode] = useState(false);
+
+    useEffect(() => {
+        const fetchCV = async () => {
+            const userNumber = sessionStorage.getItem('userNumber');
+            try {
+                const response = await getCV(userNumber);
+                console.log(response);
+                setCvLink(response.url);
+            } catch (error) {
+                console.error("Error fetching CV:", error);
+            }
+        };
+
+        fetchCV();
+    }, []);
 
     const handleDragEnter = (e) => {
         e.preventDefault();
@@ -63,15 +80,16 @@ function CardUploadCV() {
 
     const handleFileUpload = async () => {
         if (file) {
-            setLoading(true); // Inicia la carga
-            setProgress(0); // Reinicia el progreso
+            const userNumber = sessionStorage.getItem('userNumber');
+            setLoading(true);
+            setProgress(0);
             const interval = setInterval(() => {
                 setProgress((prev) => {
                     if (prev >= 90) {
                         clearInterval(interval); 
                         return prev;
                     }
-                    return prev + 95; // Incrementa el progreso
+                    return prev + 95;
                 });
             }, 500);
 
@@ -80,24 +98,25 @@ function CardUploadCV() {
                 const content = e.target.result;
                 console.log(content);
                 try {
-                    const response = await uploadCV(file);
+                    const response = await uploadCV(file, userNumber);
                     console.log(response);
-                    setResponseMessage(response.message); // O ajusta esto según la estructura de tu respuesta
+                    setResponseMessage(response.message);
+                    setCvLink(response.url); 
                 } catch (error) {
                     setResponseMessage("Error al subir el archivo");
                 }
-                clearInterval(interval); // Detén la actualización
-                setProgress(100); // Completa el progreso
-                setLoading(false); // Termina la carga
-                setAlertVisible(true); // Muestra el AlertDialog
+                clearInterval(interval);
+                setProgress(100);
+                setLoading(false);
+                setAlertVisible(true);
                 setFile(null);
+                setUploadMode(false);
             };
             reader.readAsText(file);
         }
     };
 
-    return (
-    <div>
+    const renderUploadCard = () => (
         <Card className="w-full mx-auto m-4 ring-gray-100 ring-1 ring-opacity-20 shadow-2xl">
             <CardDescription className="p-4">
                 En esta sección podrás subir tu CV para que las empresas puedan valorar mejor tus habilidades.
@@ -127,9 +146,9 @@ function CardUploadCV() {
                     <label htmlFor="file" className="cursor-pointer text-blue-500 underline">Seleccionar archivo</label>
                     {file && <p className="text-sm text-gray-700 mt-2">{file.name}</p>}
                 </div>
-                {loading && ( // Muestra el componente de carga mientras loading es true
+                {loading && (
                     <div className="w-full flex justify-center mt-4">
-                        <Progress value={progress} className="w-[60%]" /> {/* Usa el estado de progreso */}
+                        <Progress value={progress} className="w-[60%]" />
                     </div>
                 )}
             </CardContent>
@@ -137,18 +156,47 @@ function CardUploadCV() {
                 <Button size="lg" disabled={!file} onClick={handleFileUpload}>Subir Archivo</Button>
             </CardFooter>
         </Card>
+    );
 
-        <AlertDialog open={alertVisible} onOpenChange={setAlertVisible}>
-            <AlertDialogContent>
-                <AlertDialogHeader>
-                    <AlertDialogTitle>{responseMessage}</AlertDialogTitle>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                    <AlertDialogAction onClick={() => setAlertVisible(false)}>Aceptar</AlertDialogAction>
-                </AlertDialogFooter>
-            </AlertDialogContent>
-        </AlertDialog>
-    </div>
+    const renderPdfCard = () => (
+        <Card className="w-full mx-auto m-4 ring-gray-100 ring-1 ring-opacity-20 shadow-2xl">
+            <CardHeader>
+                <div className="flex justify-between items-center">
+                    <h3 className="text-lg font-bold">Tu CV</h3>
+                    <Button onClick={() => setUploadMode(true)}>Subir PDF</Button>
+                </div>
+            </CardHeader>
+            <CardContent className="p-6">
+                {cvLink ? (
+                    <iframe 
+                        src={cvLink} 
+                        width="100%" 
+                        height="600px" 
+                        title="CV"
+                        className="border-0"
+                    ></iframe>
+                ) : (
+                    <p className="text-sm text-gray-500">No has subido ningún CV todavía.</p>
+                )}
+            </CardContent>
+        </Card>
+    );
+
+    return (
+        <div>
+            {uploadMode ? renderUploadCard() : renderPdfCard()}
+
+            <AlertDialog open={alertVisible} onOpenChange={setAlertVisible}>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>{responseMessage}</AlertDialogTitle>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogAction onClick={() => setAlertVisible(false)}>Aceptar</AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
+        </div>
     );
 }
 
