@@ -2,6 +2,7 @@ import * as API from "../utils/consts.js";
 
 export const registrarEmpresa = async (empresaData) => {
   try {
+    console.log(empresaData);
     return await fetch(API.BASEURL + "/company", {
       method: "POST",
       headers: {

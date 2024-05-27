@@ -4,6 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import React from 'react';
 
 function NavbarAdmin() {
+
   return (
     <nav className="inset-x- top-0 z-50 bg-gradient-to-r from-cyan-500 to-blue-500 shadow dark:bg-gray-950">
       <div className="container px-4 md:px-0">
