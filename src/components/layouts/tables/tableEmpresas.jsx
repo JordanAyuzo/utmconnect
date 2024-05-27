@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { getEmpresas } from "@/services/empresas/empresaService";
 
 function TableEmpresas() {
   const empresas = [
