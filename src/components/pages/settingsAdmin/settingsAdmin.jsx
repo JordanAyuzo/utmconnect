@@ -5,7 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import NavbarAdmin from "@/components/layouts/navbar/navbarAdmin";
-import { obtenerAdmin } from '@/services/administrador/administradorService';
+
 import {
     Card,
     CardContent,
@@ -24,27 +24,13 @@ import {
     DialogTrigger,
   } from "@/components/ui/dialog"
 function SettingsAdmin() {
-    const [adminInfo, setAdminInfo] = useState([]);
-    const [user_number, setusernumber] = useState('');
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const data = await obtenerAdmin(user_number);
-            if (data) {
-                setAdminInfo(data); // Actualiza el estado con los datos del usuario
-            }
-        };
-
-        fetchData();
-    }, []);
-
     return (
         <div>
             <NavbarAdmin />
             <div className="grid min-h-screen w-full lg:grid-cols-[280px_1fr]">
                 
                 <div className="hidden border-r bg-gray-100/40 lg:block dark:bg-gray-800/40">
-                    <div className="flex h-full max-h-screen flex-col gap-2">
+                    <div className="flex h-full maxvalue={userId}-h-screen flex-col gap-2">
                         <div className="flex h-[60px] items-center border-b px-6">
                                 <h1 className="">Configuración de perfil</h1>
                         </div>
@@ -100,8 +86,8 @@ function SettingsAdmin() {
                                         <Input id="user_number" readOnly/>
                                         </div>
                                         <div className="space-y-2">
-                                        <Label htmlFor="paternal_sn">Correo electrónico</Label>
-                                        <Input id="paternal_sn" readOnly/>
+                                        <Label htmlFor="email">Correo electrónico</Label>
+                                        <Input id="email" readOnly/>
                                         </div>
                                     </div>
                                 </CardContent>
@@ -116,33 +102,33 @@ function SettingsAdmin() {
                                         Realice cambios en su perfil aquí. Haga clic en guardar cuando haya terminado.
                                         </DialogDescription>
                                         </DialogHeader>
+                                        <form>
                                         <div className="grid gap-4 py-4">
                                             <div className="grid grid-cols-4 items-center gap-4">
-                                                <Label htmlFor="name" className="text-right">
+                                                <Label htmlFor="user_number" className="text-right">
                                                 Usuario
                                                 </Label>
                                                 <Input
-                                                id="name"
-                                                defaultValue="Pedro Duarte"
                                                 readOnly
+                                                id="user_number"
                                                 className="col-span-3"
                                                 />
                                             </div>
                                             <div className="grid grid-cols-4 items-center gap-4">
-                                                <Label htmlFor="name" className="text-right">
+                                                <Label htmlFor="oldPassword" className="text-right">
                                                 Contraseña actual
                                                 </Label>
                                                 <Input
-                                                id="name"
+                                                id="oldPassword"
                                                 className="col-span-3"
                                                 />
                                             </div>
                                             <div className="grid grid-cols-4 items-center gap-4">
-                                                <Label htmlFor="username" className="text-right">
+                                                <Label htmlFor="newPassword" className="text-right">
                                                     Nueva contraseña
                                                 </Label>
                                                 <Input
-                                                id="username"
+                                                id="newPassword"
                                                 className="col-span-3"
                                                 />
                                             </div>
@@ -150,6 +136,7 @@ function SettingsAdmin() {
                                         <DialogFooter>
                                         <Button type="submit">Guardar cambios</Button>
                                         </DialogFooter>
+                                        </form>
                                     </DialogContent>
                                     </Dialog>
                             </Card>
