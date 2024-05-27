@@ -83,7 +83,7 @@ function Login() {
                             {loading ? 'Ingresando...' : 'Ingresar'}
                         </Button>
                         <div className="text-center mt-4">
-                            <a href="#" className="text-sm text-blue-500 hover:underline">
+                            <a href="/registerEmpresa" className="text-sm text-blue-500 hover:underline">
                                 ¿Eres una empresa nueva?
                             </a>
                         </div>

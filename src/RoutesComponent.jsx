@@ -7,6 +7,8 @@ import RegisterStud from './components/pages/registersStud/registerStud.jsx';
 import RegisterAdmin from './components/pages/registerAdmin/registerAdmin.jsx';
 import SettingStud from './components/pages/settingStud/settingStud.jsx';
 import SettingsAdmin from './components/pages/settingsAdmin/settingsAdmin.jsx';
+import PageEmpresas from './components/pages/pageEmpresas/pageEmpresas.jsx';
+import RegisterEmpresa from './components/pages/registerEmpresas/registerEmpresa.jsx';
 
 function RoutesComponent() {
     return (
@@ -19,6 +21,8 @@ function RoutesComponent() {
                     <Route path="/registerAdmin" element={<RegisterAdmin/>}/>
                     <Route path="/settingsStudent" element={<SettingStud/>}/>
                     <Route path="/settingsAdmin" element={<SettingsAdmin/>}/>
+                    <Route path="/pageEmpresas" element={<PageEmpresas/>}/>
+                    <Route path="/registerEmpresa" element={<RegisterEmpresa/>}/>
                 </Routes>
         </div>
     );

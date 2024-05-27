@@ -74,6 +74,7 @@ function NavbarAdmin() {
                 </div>
             </div>
         </nav>
-    )
+    
+}
 
-}export default NavbarAdmin;
+export default NavbarAdmin;
