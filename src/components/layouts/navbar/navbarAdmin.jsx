@@ -45,7 +45,7 @@ function NavbarAdmin() {
                         <Link to={'/registerStudent'}
                             className="font-medium text-sm border-b-2 border-transparent transition-colors hover:text-gray-900 hover:border-gray-100 dark:hover:text-gray-50 dark:hover:border-gray-800"
                         >Alumnos</Link>
-                        <Link Link to={'/homeAdmin'}
+                        <Link Link to={'/pageEmpresas'}
                             className="font-medium text-sm border-b-2 border-transparent transition-colors hover:text-gray-900 hover:border-gray-100 dark:hover:text-gray-50 dark:hover:border-gray-800"
                         >Empresas</Link>
                         <Link Link to={'/registerAdmin'}
@@ -74,7 +74,7 @@ function NavbarAdmin() {
                 </div>
             </div>
         </nav>
-    
+    )
 }
 
 export default NavbarAdmin;
