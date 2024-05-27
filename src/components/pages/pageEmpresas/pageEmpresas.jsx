@@ -1,31 +1,18 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from  "@/components/ui/alert-dialog";
 import NavbarAdmin from "@/components/layouts/navbar/navbarAdmin";
 import TableEmpresas from "@/components/layouts/tables/tableEmpresas";
+import TableEmpresasApplicant from "@/components/layouts/tables/tableEmpresasApplicant";
+import { useState, useEffect } from "react";
+import { getEmpresasAplicant } from "@/services/empresas/empresaService";
 
 function PageEmpresas() {
-  const empresas = [
-    {
-      id: 1,
-      nombre: "Empresa 1",
-      imagen: "url-de-la-imagen-1",
-      descripcion: "Descripción de la Empresa 1",
-    },
-    {
-      id: 2,
-      nombre: "Empresa 2",
-      imagen: "url-de-la-imagen-2",
-      descripcion: "Descripción de la Empresa 2",
-    },
-    {
-      id: 3,
-      nombre: "Empresa 3",
-      imagen: "url-de-la-imagen-3",
-      descripcion: "Descripción de la Empresa 3",
-    },
-  ];
+  const [empresas, setEmpresas] = useState([]);
+
+  useEffect(() => {
+    getEmpresasAplicant().then(setEmpresas);
+  }, []);
 
   const aceptarEmpresa = (id) => {
     console.log(`Empresa con id ${id} aceptada`);
@@ -55,58 +42,8 @@ function PageEmpresas() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-2 flex justify-center">
-                  <div className="space-y-1 w-full max-w-xl">
-                    {empresas.map((empresa) => (
-                      <div
-                        key={empresa.id}
-                        className="flex items-center justify-between"
-                      >
-                        <h2>{empresa.nombre}</h2>
-                        <div>
-                          <AlertDialog>
-                            <AlertDialogTrigger asChild>
-                              <Button
-                                variant="secondary"
-                                className="mr-2"
-                                onClick={() => console.log("Info")}
-                              >
-                                Info
-                              </Button>
-                            </AlertDialogTrigger>
-                            <AlertDialogContent className="flex flex-col items-center">
-                              <AlertDialogHeader>
-                                <AlertDialogTitle className="text-center">
-                                  Información de la empresa
-                                </AlertDialogTitle>
-                                <img
-                                  src={empresa.imagen}
-                                  alt={empresa.nombre}
-                                />
-                                <AlertDialogDescription className="text-center">
-                                  {empresa.descripcion}
-                                </AlertDialogDescription>
-                              </AlertDialogHeader>
-                              <AlertDialogFooter className="flex justify-center">
-                                <AlertDialogCancel>Cerrar</AlertDialogCancel>
-                                <AlertDialogAction>Continuar</AlertDialogAction>
-                              </AlertDialogFooter>
-                            </AlertDialogContent>
-                          </AlertDialog>
-                          <Button
-                            className="mr-2"
-                            onClick={() => aceptarEmpresa(empresa.id)}
-                          >
-                            Aceptar
-                          </Button>
-                          <Button
-                            variant="destructive"
-                            onClick={() => rechazarEmpresa(empresa.id)}
-                          >
-                            Rechazar
-                          </Button>
-                        </div>
-                      </div>
-                    ))}
+                  <div className="space-y-1 w-full">
+                    <TableEmpresasApplicant />
                   </div>
                 </CardContent>
               </Card>
