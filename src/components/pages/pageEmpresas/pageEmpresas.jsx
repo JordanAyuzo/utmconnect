@@ -39,7 +39,7 @@ function PageEmpresas() {
     <div>
       <NavbarAdmin />
       <div className="flex justify-center">
-        <div className="w-full max-w-2xl">
+        <div className="w-full max-w-6xl">
           <Tabs defaultValue="revisar" className="mx-auto p-4">
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="revisar">Solicitudes de empresas</TabsTrigger>
@@ -54,8 +54,8 @@ function PageEmpresas() {
                     la institución.
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-2">
-                  <div className="space-y-1">
+                <CardContent className="space-y-2 flex justify-center">
+                  <div className="space-y-1 w-full max-w-xl">
                     {empresas.map((empresa) => (
                       <div
                         key={empresa.id}
