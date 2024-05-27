@@ -84,7 +84,7 @@ function Login() {
                         </Button>
                         <div className="text-center mt-4">
                             <a href="#" className="text-sm text-blue-500 hover:underline">
-                                ¿Eres una empresa?
+                                ¿Eres una empresa nueva?
                             </a>
                         </div>
                     </form>

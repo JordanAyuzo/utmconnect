@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import NavbarStud from "@/components/layouts/navbar/navbarStud";
-import TableAlumnos from "@/components/layouts/tables/tableAlumnos";
+
 
 function HomeStud() {
   return (
-    <div>
+    <div style={{ textAlign: "center" }}>
       <NavbarStud/>
-      <h1>Bienvenido a la pagina Principal</h1>
+      <h1 style={{ fontSize: "2em" }}>Bienvenido a la página Principal</h1>
+      <img src="https://i.ibb.co/C8j8y3r/01-UTM-02.png" alt="Escudo UTM" style={{ width: "80%", maxWidth: "600px", margin: "auto" }} />
+      
     </div>
   );
 }

@@ -66,3 +66,18 @@ export const cambiarPassword = async (id, oldPassword, newPassword) => {
     console.error("Error changing password:", e);
   }
 };
+
+export const uploadImage = async (id,image) => {
+  console.log("Hace la consulta");
+  try {
+    const formData = new FormData();
+    formData.append("file", image);
+        return await fetch(`${API.BASEURL}/user/extra/image/${id}`, {
+            method: 'POST',
+            body: formData
+        })
+        .then((res) => res.json());
+    }
+    catch (e) {
+    }
+}

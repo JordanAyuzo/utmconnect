@@ -9,35 +9,38 @@ import {
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { obtenerUsuario } from "@/services/usuario/usuarioService"; 
+import { obtenerAlumno, guardarInfo } from "@/services/alumnos/alumnoService"; // Importar las funciones necesarias
+import { uploadImage, obtenerUsuario } from "@/services/usuario/usuarioService";
 
 function CardPersonalStudent() {
   const [userData, setUserData] = useState({
-    name: "",
-    email: "",
-    paternalName: "",
-    maternalName: "",
-    password: "",
     bio: "",
   });
 
-  const [profileImage, setProfileImage] = useState("https://github.com/shadcn.png");
+  const [profileImage, setProfileImage] = useState("https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg");
   const [selectedImage, setSelectedImage] = useState(null);
+  const [notification, setNotification] = useState(""); // Estado para manejar las notificaciones
 
   useEffect(() => {
     const userNumber = sessionStorage.getItem("userNumber");
     if (userNumber) {
-      obtenerUsuario(userNumber).then((data) => {
+      obtenerAlumno(userNumber).then((data) => {
         if (data) {
+          console.log(data);
           setUserData({
-            name: data.name,
-            email: data.email,
-            paternalName: "", // Ajusta según cómo se divide el nombre completo en tu backend
-            maternalName: "", // Ajusta según cómo se divide el nombre completo en tu backend
-            password: "", // O puedes configurar para mostrar una contraseña enmascarada si es necesario
-            bio: "This is my bio.", // Ajusta según tus necesidades
+            bio: data.about, // Ajusta según tus necesidades
           });
         }
+      }).catch((error) => {
+        console.error("Error al obtener los datos del alumno", error);
+      });
+
+      obtenerUsuario(userNumber).then((data) => {
+        if (data && data.image_link) {
+          setProfileImage(data.image_link);
+        }
+      }).catch((error) => {
+        console.error("Error al obtener los datos del usuario", error);
       });
     }
   }, []);
@@ -65,12 +68,41 @@ function CardPersonalStudent() {
     }
   };
 
+  // Handler para guardar los cambios
+  const handleSaveChanges = () => {
+    const userNumber = sessionStorage.getItem("userNumber");
+    if (userNumber) {
+      const saveBio = guardarInfo(userNumber, userData.bio, 2); // Llamar a la función guardarInfo con la biografía y userNumber
+      const uploadProfileImage = selectedImage ? uploadImage(userNumber, selectedImage) : Promise.resolve();
+
+      Promise.all([saveBio, uploadProfileImage])
+        .then(([bioResponse, imageResponse]) => {
+          setNotification("Información guardada con éxito");
+          console.log("Información guardada con éxito", bioResponse, imageResponse);
+        })
+        .catch((error) => {
+          setNotification("Error al guardar la información");
+          console.error("Error al guardar la información", error);
+        });
+    } else {
+      setNotification("userNumber no encontrado en sessionStorage");
+      console.error("userNumber no encontrado en sessionStorage");
+    }
+  };
+
   return (
     <Card id="" className="border rounded-lg shadow-lg p-4">
       <CardHeader>
         <CardTitle>Personalizar Perfil</CardTitle>
       </CardHeader>
       <CardContent className="space-y-2">
+        {notification && (
+          <div className={notification.includes("Error") ? "bg-red-200 p-2 rounded-md" : "bg-green-200 p-2 rounded-md"}>
+            <Label className={notification.includes("Error") ? "text-red-500" : "text-green-500"}>
+              {notification}
+            </Label>
+          </div>
+        )}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="flex flex-col items-center relative">
             <div className="aspect-square w-[200px] mx-auto relative group">
@@ -107,7 +139,7 @@ function CardPersonalStudent() {
         </div>
       </CardContent>
       <CardFooter className="flex justify-end">
-        <Button>Save Changes</Button>
+        <Button onClick={handleSaveChanges}>Save Changes</Button> {/* Agregar el evento onClick */}
       </CardFooter>
     </Card>
   );
