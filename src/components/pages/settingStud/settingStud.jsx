@@ -5,23 +5,6 @@ import CardExpStudent from "@/components/layouts/cards/cardExpStudent";
 import CardPersonalStudent from "@/components/layouts/cards/cardPersonalStudent";
 import NavbarStud from "@/components/layouts/navbar/navbarStud"; 
 import { Link } from "react-router-dom";
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog";
-import NavbarAdmin from "@/components/layouts/navbar/navbarAdmin";
 import React, { useState } from 'react';
 
 function SettingStud() {
@@ -65,27 +48,12 @@ function SettingStud() {
                     </div>
                 </div>
 
-                <div>
-                    <Dialog>
-                        <DialogTrigger></DialogTrigger>INformacion del Administrador
-                        <DialogContent>
-                            <DialogHeader>
-                                <DialogTitle>Are you absolutely sure?</DialogTitle>
-                                <DialogDescription>
-                                    This action cannot be undone. This will permanently delete your account
-                                    and remove your data from our servers.
-                                </DialogDescription>
-                            </DialogHeader>
-                        </DialogContent>
-                    </Dialog>
-                </div>
-
                 <div className="flex flex-col">
                     <main className="flex-1 p-6">
                         <div className="space-y-6">
                             <div>
-                                <h1 className="text-2xl font-bold">Account</h1>
-                                <p className="text-gray-500 dark:text-gray-400">Update your account information.</p>
+                                <h1 className="text-2xl font-bold">Mi perfil</h1>
+                                <p className="text-gray-500 dark:text-gray-400">Actualiza la información de tu cuenta para mejorar tu experiencia.</p>
                             </div>
 
                             {selectedSection === 'personal-information' && (
@@ -100,6 +68,7 @@ function SettingStud() {
                             {selectedSection === 'personalizar' && (
                                 <CardPersonalStudent/>
                             )}
+
 
                         </div>
                     </main>
