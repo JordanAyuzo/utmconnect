@@ -28,7 +28,7 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Progress } from "@/components/ui/progress"; // Importa el componente Progress
+import { Progress } from "@/components/ui/progress";
 import "./registerStud.css";
 
 function RegisterStud() {
@@ -36,8 +36,8 @@ function RegisterStud() {
     const [dragActive, setDragActive] = useState(false);
     const [alertVisible, setAlertVisible] = useState(false);
     const [responseMessage, setResponseMessage] = useState('');
-    const [loading, setLoading] = useState(false); // Estado para controlar la carga
-    const [progress, setProgress] = useState(0); // Estado para el progreso
+    const [loading, setLoading] = useState(false);
+    const [progress, setProgress] = useState(0);
 
     const handleDragEnter = (e) => {
         e.preventDefault();
@@ -74,15 +74,15 @@ function RegisterStud() {
     const handleFileUpload = async () => {
         console.log("Mostrando archivo");
         if (file) {
-            setLoading(true); // Inicia la carga
-            setProgress(0); // Reinicia el progreso
+            setLoading(true);
+            setProgress(0);
             const interval = setInterval(() => {
                 setProgress((prev) => {
                     if (prev >= 90) {
                         clearInterval(interval); 
                         return prev;
                     }
-                    return prev + 95; // Incrementa el progreso
+                    return prev + 95;
                 });
             }, 500);
 
@@ -93,14 +93,15 @@ function RegisterStud() {
                 try {
                     const response = await register(file);
                     console.log(response);
-                    setResponseMessage(response.message); // O ajusta esto según la estructura de tu respuesta
+                    const { total_students, saved_students, failed_students } = response;
+                    setResponseMessage(`Se guardaron ${saved_students} de los ${total_students} estudiantes. Fallaron ${failed_students}.`);
                 } catch (error) {
                     setResponseMessage("Error al subir el archivo");
                 }
-                clearInterval(interval); // Detén la actualización
-                setProgress(100); // Completa el progreso
-                setLoading(false); // Termina la carga
-                setAlertVisible(true); // Muestra el AlertDialog
+                clearInterval(interval);
+                setProgress(100);
+                setLoading(false);
+                setAlertVisible(true);
                 setFile(null);
             };
             reader.readAsText(file);
@@ -145,9 +146,9 @@ function RegisterStud() {
                                 <label htmlFor="file" className="cursor-pointer text-blue-500 underline">Seleccionar archivo</label>
                                 {file && <p className="text-sm text-gray-700 mt-2">{file.name}</p>}
                             </div>
-                            {loading && ( // Muestra el componente de carga mientras loading es true
+                            {loading && (
                                 <div className="w-full flex justify-center mt-4">
-                                    <Progress value={progress} className="w-[60%]" /> {/* Usa el estado de progreso */}
+                                    <Progress value={progress} className="w-[60%]" />
                                 </div>
                             )}
                         </CardContent>
@@ -156,6 +157,7 @@ function RegisterStud() {
                         </CardFooter>
                     </Card>
                 </TabsContent>
+
                 <TabsContent value="delete">
                     <Card className="w-full mx-auto m-4 ring-gray-100 ring-1 ring-opacity-20 shadow-2xl">
                         <CardHeader>

@@ -11,7 +11,8 @@ function TableAdministrador() {
 
   useEffect(() => {
     getAdministrador().then((res) => {
-      setAdministrador(res);
+      const filteredAdministrador = res.filter((admin) => admin.user_type === '0');
+      setAdministrador(filteredAdministrador);
     });
   }, []);
 

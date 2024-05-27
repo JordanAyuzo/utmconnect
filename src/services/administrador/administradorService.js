@@ -16,7 +16,7 @@ export const getAdministrador = async () => {
 export const registerAdmins = async (numberA, name, pname, mname, mail, pass) => {
   const date = new Date();
   const user_json = {
-    user_type:"0",
+    user_type:'0',
     user_number: parseInt(numberA, 10), 
     name: name,
     paternal_sn : pname,
