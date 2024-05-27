@@ -4,6 +4,7 @@ import Login from "./components/pages/login/login.jsx";
 import HomeAdmin from './components/pages/homeAdmin/homeAdmin.jsx';
 import RegisterStud from './components/pages/registersStud/registerStud.jsx';
 import SettingStud from './components/pages/settingStud/settingStud.jsx';
+import RegisterEmpresa from './components/pages/registerEmpresas/registerEmpresa.jsx';
 
 function RoutesComponent() {
     return (
@@ -13,6 +14,7 @@ function RoutesComponent() {
                     <Route path="/homeAdmin" element={<HomeAdmin/>}/>
                     <Route path="/registerStudent" element={<RegisterStud/>}/>
                     <Route path="/settingsStudent" element={<SettingStud/>}/>
+                    <Route path="/registerEmpresa" element={<RegisterEmpresa/>}/>
                 </Routes>
         </div>
     );
