@@ -47,8 +47,7 @@ export function EmpresaForm() {
     user_type: "2",
     direccion: '',
     giro: '',
-    descripcion: '',
-
+    descripcion: '',    
     jefe_inmediato: "La calaca chida",
     departamento: '',
     status: '0' // ESPERA
