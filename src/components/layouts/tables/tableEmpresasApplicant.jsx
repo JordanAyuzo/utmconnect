@@ -84,13 +84,13 @@ function TableEmpresasApplicant() {
                   </AlertDialog>
                   <Button
                     className="mr-2"
-                    onClick={() => handleStatusChange(empresa.rfc, 1)}
+                    onClick={() => handleStatusChange(empresa.rfc, "1")}
                   >
                     Aceptar
                   </Button>
                   <Button
                     variant="destructive"
-                    onClick={() => handleStatusChange(empresa.rfc, 2)}
+                    onClick={() => handleStatusChange(empresa.rfc, "2")}
                   >
                     Rechazar
                   </Button>

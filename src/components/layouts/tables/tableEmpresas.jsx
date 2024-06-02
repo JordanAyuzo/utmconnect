@@ -57,7 +57,7 @@ function TableEmpresas() {
               <TableCell className="text-right">
                 <Button 
                   variant="destructive"
-                  onClick={() => handleStatusChange(empresa.rfc, 2)}
+                  onClick={() => handleStatusChange(empresa.rfc, "2")}
                 >
                   Dar de baja
                 </Button>
