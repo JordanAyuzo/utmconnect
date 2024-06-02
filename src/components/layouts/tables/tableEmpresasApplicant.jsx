@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink } from "@/components/ui/pagination";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from  "@/components/ui/alert-dialog";
-import { getEmpresasAplicant } from "@/services/empresas/empresaService";
+import { getEmpresasAplicant, changeStatusEmpresa } from "@/services/empresas/empresaService";
 
 function TableEmpresasApplicant() {
   const [empresas, setEmpresas] = useState([]);
@@ -20,6 +20,12 @@ function TableEmpresasApplicant() {
     indexOfFirstEmpresa,
     indexOfLastEmpresa
   );
+
+  const handleStatusChange = (idEmpresa, status) => {
+    changeStatusEmpresa(idEmpresa, status).then(() => {
+      getEmpresasAplicant().then(setEmpresas);
+    });
+  };
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -40,7 +46,7 @@ function TableEmpresasApplicant() {
         </TableHeader>
         <TableBody>
           {currentEmpresas.map((empresa) => (
-            <TableRow key={empresa.id}>
+            <TableRow key={empresa.rfc}>
               <TableCell className="font-medium">{empresa.rfc}</TableCell>
               <TableCell>{empresa.direccion}</TableCell>
               <TableCell>{empresa.giro}</TableCell>
@@ -78,13 +84,13 @@ function TableEmpresasApplicant() {
                   </AlertDialog>
                   <Button
                     className="mr-2"
-                    onClick={() => aceptarEmpresa(empresa.id)}
+                    onClick={() => handleStatusChange(empresa.rfc, 1)}
                   >
                     Aceptar
                   </Button>
                   <Button
                     variant="destructive"
-                    onClick={() => rechazarEmpresa(empresa.id)}
+                    onClick={() => handleStatusChange(empresa.rfc, 2)}
                   >
                     Rechazar
                   </Button>

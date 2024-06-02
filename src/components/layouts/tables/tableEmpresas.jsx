@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink } from "@/components/ui/pagination";
-import { getEmpresas } from "@/services/empresas/empresaService";
+import { getEmpresas, changeStatusEmpresa } from "@/services/empresas/empresaService";
 
 function TableEmpresas() {
   const [empresas, setEmpresas] = useState([]);
@@ -19,6 +19,13 @@ function TableEmpresas() {
     indexOfFirstEmpresa,
     indexOfLastEmpresa
   );
+
+  // Función para cambiar el estado de la empresa: 0 = pendiente, 1 = aprobado, 2 = rechazado
+  const handleStatusChange = (idEmpresa, status) => {
+    changeStatusEmpresa(idEmpresa, status).then(() => {
+      getEmpresas().then(setEmpresas);
+    });
+  };
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -39,7 +46,7 @@ function TableEmpresas() {
         </TableHeader>
         <TableBody>
           {currentEmpresas.map((empresa) => (
-            <TableRow key={empresa.id}>
+            <TableRow key={empresa.rfc}>
               <TableCell className="font-medium">{empresa.rfc}</TableCell>
               <TableCell>{empresa.direccion}</TableCell>
               <TableCell>{empresa.giro}</TableCell>
@@ -48,7 +55,12 @@ function TableEmpresas() {
               <TableCell>{empresa.departamento}</TableCell>
               <TableCell>{empresa.status}</TableCell>
               <TableCell className="text-right">
-                <Button variant="destructive">Dar de baja</Button>
+                <Button 
+                  variant="destructive"
+                  onClick={() => handleStatusChange(empresa.rfc, 2)}
+                >
+                  Dar de baja
+                </Button>
               </TableCell>
             </TableRow>
           ))}
