@@ -17,7 +17,7 @@ export const registrarEmpresa = async (empresaData) => {
 
 export const getEmpresas = async () => {
   try {
-    return await fetch(API.BASEURL + "/company", {
+    return await fetch(API.BASEURL + "/company?status=1", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -30,7 +30,7 @@ export const getEmpresas = async () => {
 
 export const getEmpresasAplicant = async () => {
   try {
-    return await fetch(API.BASEURL + "/company/applicant", {
+    return await fetch(API.BASEURL + "/company?status=0", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
