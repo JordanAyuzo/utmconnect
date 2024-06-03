@@ -14,14 +14,6 @@ function PageEmpresas() {
     getEmpresasAplicant().then(setEmpresas);
   }, []);
 
-  const aceptarEmpresa = (id) => {
-    console.log(`Empresa con id ${id} aceptada`);
-  };
-
-  const rechazarEmpresa = (id) => {
-    console.log(`Empresa con id ${id} rechazada`);
-  };
-
   return (
     <div>
       <NavbarAdmin />

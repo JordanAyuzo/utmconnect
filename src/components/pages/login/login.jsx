@@ -37,7 +37,10 @@ function Login() {
                 }
                 if(response.user.user_type == '1'){
                     navigate('/homestudent')
-                }  
+                }
+                if(response.user.user_type == '2') {
+                    navigate('/homeEmpresa')
+                }
             } else {
                 setError(response.message || 'Error al ingresar');
             }
