@@ -10,6 +10,7 @@ import SettingsAdmin from './components/pages/settingsAdmin/settingsAdmin.jsx';
 import PageEmpresas from './components/pages/pageEmpresas/pageEmpresas.jsx';
 import RegisterEmpresa from './components/pages/registerEmpresas/registerEmpresa.jsx';
 import PageVacantes from './components/pages/pageVacantes/pageVacantes.jsx';
+import HomeEmpresa from './components/pages/homEmpresa/homeEmpresa.jsx';
 
 function RoutesComponent() {
     return (
@@ -25,6 +26,7 @@ function RoutesComponent() {
                     <Route path="/pageEmpresas" element={<PageEmpresas/>}/>
                     <Route path="/registerEmpresa" element={<RegisterEmpresa/>}/>
                     <Route path="/pageVacantes" element={<PageVacantes/>}/>
+                    <Route path="/homeEmpresa" element={<HomeEmpresa/>}/>
                 </Routes>
         </div>
     );
