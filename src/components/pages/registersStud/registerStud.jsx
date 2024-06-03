@@ -30,6 +30,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Progress } from "@/components/ui/progress";
 import "./registerStud.css";
+import TableAlumnos from '@/components/layouts/tables/tableAlumnos';
 
 function RegisterStud() {
     const [file, setFile] = useState(null);
@@ -114,7 +115,7 @@ function RegisterStud() {
             <Tabs defaultValue="register" className="max-w-full mx-auto p-4">
                 <TabsList className="grid w-full grid-cols-2">
                     <TabsTrigger value="register">Registrar Alumnos</TabsTrigger>
-                    <TabsTrigger value="delete">Dar de baja Alumnos</TabsTrigger>
+                    <TabsTrigger value="lista">Lista de Alumnos</TabsTrigger>
                 </TabsList>
                 <TabsContent value="register">
                     <Card className="w-full mx-auto m-4 ring-gray-100 ring-1 ring-opacity-20 shadow-2xl">
@@ -158,20 +159,17 @@ function RegisterStud() {
                     </Card>
                 </TabsContent>
 
-                <TabsContent value="delete">
+                <TabsContent value="lista">
                     <Card className="w-full mx-auto m-4 ring-gray-100 ring-1 ring-opacity-20 shadow-2xl">
                         <CardHeader>
-                            <CardTitle>Dar de Baja a Alumnos</CardTitle>
+                            <CardTitle>Lista de alumnos</CardTitle>
                             <CardDescription>
-                                Aquí aparecerán todos los alumnos dados de baja.
+                                Aquí aparecerán todos los alumnos que se han registrado en el sistema.
                             </CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-2">
-                            {/* Aquí puedes añadir contenido adicional si es necesario */}
+                            <TableAlumnos />
                         </CardContent>
-                        <CardFooter>
-                            <Button>Dar de baja a Todos</Button>
-                        </CardFooter>
                     </Card>
                 </TabsContent>
             </Tabs>
