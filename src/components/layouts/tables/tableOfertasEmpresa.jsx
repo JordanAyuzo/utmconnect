@@ -6,6 +6,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { getVacante } from "@/services/vacantes/vacanteService";
 import { eliminarVacante } from '@/services/vacantes/vacanteService';
 import CardUpdateOffer from '@/components/layouts/cards/cardUpdateOffer';
+import { obtenerUsuario } from '@/services/usuario/usuarioService';
 
 
 function TableOfertasEmpresa() {
@@ -13,9 +14,33 @@ function TableOfertasEmpresa() {
     const [currentPage, setCurrentPage] = useState(1);
     const vacantePerPage = 5;
 
+    const [userData, setUserData] = useState({
+        userNumber: 0,
+    });
 
     useEffect(() => {
-        getVacante().then(setVacantes);
+    const fetchData = async () => {
+        try {
+            const userNumber = sessionStorage.getItem("userNumber");
+            if (userNumber) {
+                obtenerUsuario(userNumber).then((data) => {
+                    if (data) {
+                        setUserData({
+                            userNumber: data.user_number,
+                        });
+                        // Luego de obtener el usuario activo, obtenemos las vacantes y filtro las que coinciden con el RFC del usuario
+                        getVacante().then((vacantes) => {
+                            const filteredVacantes = vacantes.filter(vacante => vacante.empresa_rfc === data.user_number);
+                            setVacantes(filteredVacantes);
+                        });
+                    }
+                });
+            }
+        } catch (error) {
+            console.error("Error fetching vacantes:", error);
+        }
+    };
+    fetchData();
     }, []);
 
     const indexOfLastVacante = currentPage * vacantePerPage;

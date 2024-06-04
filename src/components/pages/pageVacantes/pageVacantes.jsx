@@ -1,7 +1,8 @@
 import {useState, useEffect } from 'react'
-import NavbarAdmin from "@/components/layouts/navbar/navbarAdmin";
+import NavbarEmpresa from "@/components/layouts/navbar/navbarEmpresa";
 import TableOfertasEmpresa from "@/components/layouts/tables/tableOfertasEmpresa";
 import { registrarVacante } from '@/services/vacantes/vacanteService';
+import { obtenerUsuario } from "@/services/usuario/usuarioService";
 import "./pageVacantes.css"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -48,8 +49,11 @@ function PageVacantes() {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
+    const [userData, setUserData] = useState({
+        userNumber: 0,
+    });
+
     const handleClear = () => {
-        setempresarfc('');
         setoffername('');
         setofferdescription('');
         setofferprice('');
@@ -61,6 +65,17 @@ function PageVacantes() {
     };
 
     useEffect(() => {
+        const userNumber = sessionStorage.getItem("userNumber");
+        if (userNumber) {
+          obtenerUsuario(userNumber).then((data) => {
+            if (data) {
+              setUserData({
+                userNumber: data.user_number,
+              });
+              setempresarfc(data.user_number);
+            }
+          });
+        }
         let timeoutId;
         if (error) {
             timeoutId = setTimeout(() => {
@@ -77,7 +92,7 @@ function PageVacantes() {
         setError('');
     
         if (
-            empresa_rfc.trim() === '' ||
+            
             offer_name.trim() === '' ||
             offer_description.trim() === '' ||
             offer_price.trim() === '' ||
@@ -113,7 +128,7 @@ function PageVacantes() {
 
     return (
         <div>
-        <NavbarAdmin />
+        <NavbarEmpresa />
         <div className="flex justify-center ">
             <div className="w-full max-w-8xl">
             <Tabs defaultValue="principal" className="mx-auto p-4">
@@ -149,8 +164,8 @@ function PageVacantes() {
                                 <form onSubmit={handleSubmit}>
                                     <div className="grid grid-cols-2 items-start gap-6">
                                         <div className=" flex flex-col text-left space-y-2">
-                                        <Label htmlFor="offer_rfc">RFC:</Label>
-                                        <Input className="border border-gray-400" id="offer_rfc" placeholder="Ingresa el RFC de la empresa" value={empresa_rfc} onChange={(e) => setempresarfc(e.target.value)}/>
+                                        <Label htmlFor="empresa_rfc">RFC:</Label>
+                                        <Input className="border border-gray-400" placeholder="Ingresa el RFC de la empresa" value={empresa_rfc} onChange={(e) => setoffername(e.target.value)} id="empresa_rfc"/>
                                         <Label htmlFor="offer_name">Nombre de la vacante:</Label>
                                         <Input className="border border-gray-400" id="offer_name" placeholder="Ingresa el nombre de la vacante" value={offer_name} onChange={(e) => setoffername(e.target.value)}/>                                    
                                         <Label htmlFor="offer_price">Remuneración:</Label>
@@ -173,7 +188,7 @@ function PageVacantes() {
                                             </Select>
                                         <Label htmlFor="acces_date1">Fecha de apertura:</Label>
                                         <Input className="border border-gray-400" id="acces_date1" placeholder="Ingresa la fecha de apertura" value={offer_start_date} onChange={(e) => setofferstartdate(e.target.value)}/>
-                                        <Label htmlFor="acces_date2">Fecha de apertura:</Label>
+                                        <Label htmlFor="acces_date2">Fecha de Finalización:</Label>
                                         <Input className="border border-gray-400" id="acces_date2" placeholder="Ingresa la fecha vencimiento" value={offer_end_date} onChange={(e) => setofferenddate(e.target.value)}/>
                                         </div>
                                         <div className='space-y-2 text-left grid w-full items-center'>

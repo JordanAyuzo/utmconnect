@@ -15,14 +15,15 @@ export const getVacante = async () => {
 
 export const obtenerVacante = async (id) => {
   try {
-    return await fetch(`${API.BASEURL}/offers/${id}`, {
+    const response = await fetch(`${API.BASEURL}/offers/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
-    }).then((res) => res.json());
+    });
+    return await response.json();
   } catch (e) {
-    console.error("Error al obtener la informacion de la vacante:", e);
+    console.error("Error fetching user data:", e);
   }
 };
 
