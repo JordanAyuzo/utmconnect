@@ -1,3 +1,4 @@
+import { Home } from "lucide-react";
 import * as API from "../utils/consts.js";
 
 export const getVacante = async () => {
@@ -36,7 +37,7 @@ export const registrarVacante = async (empresaRFC, offerName, offerDescription, 
     offer_price: parseInt(offerPrice, 10),
     offer_start_date: startDate.toString(),
     offer_end_date: endDate.toString(),
-    offer_work_mode: 'Hybrid',
+    offer_work_mode: 'Home_office',
     offer_address: offerAddress,
     offer_responsabilities: ["IA", "DS", "WEB"],
   };

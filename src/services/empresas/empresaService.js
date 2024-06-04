@@ -56,3 +56,17 @@ export const changeStatusEmpresa = async (idEmpresa, status) => {
     console.error("Error changing status empresa:", e);
   }
 };
+
+export const obtenerEmpresa = async (id) => {
+  try {
+    const response = await fetch(`${API.BASEURL}/company/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return await response.json();
+  } catch (e) {
+    console.error("Error fetching user data:", e);
+  }
+};

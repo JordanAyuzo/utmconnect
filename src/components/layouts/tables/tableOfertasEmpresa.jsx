@@ -18,24 +18,30 @@ function TableOfertasEmpresa() {
         userNumber: 0,
     });
 
+    const fetchAndFilterVacantes = async () => {
+        const userNumber = sessionStorage.getItem("userNumber");
+        if (userNumber) {
+            try {
+                const data = await obtenerUsuario(userNumber);
+                if (data) {
+                    setUserData({
+                        userNumber: data.user_number,
+                    });
+                    const vacantes = await getVacante();
+                    const filteredVacantes = vacantes.filter(vacante => vacante.empresa_rfc === data.user_number);
+                    setVacantes(filteredVacantes);
+                }
+            } catch (error) {
+                console.error("Error fetching and filtering vacantes:", error);
+                // Manejar el error según sea necesario
+            }
+        }
+    };
+
     useEffect(() => {
     const fetchData = async () => {
         try {
-            const userNumber = sessionStorage.getItem("userNumber");
-            if (userNumber) {
-                obtenerUsuario(userNumber).then((data) => {
-                    if (data) {
-                        setUserData({
-                            userNumber: data.user_number,
-                        });
-                        // Luego de obtener el usuario activo, obtenemos las vacantes y filtro las que coinciden con el RFC del usuario
-                        getVacante().then((vacantes) => {
-                            const filteredVacantes = vacantes.filter(vacante => vacante.empresa_rfc === data.user_number);
-                            setVacantes(filteredVacantes);
-                        });
-                    }
-                });
-            }
+            fetchAndFilterVacantes();
         } catch (error) {
             console.error("Error fetching vacantes:", error);
         }
@@ -53,8 +59,14 @@ function TableOfertasEmpresa() {
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     const handleEliminarVacante = async (id) => {
-        await eliminarVacante(id); // Acá elimino la vacante
-        getVacante().then(setVacantes);
+        try {
+            // Eliminar la vacante
+            await eliminarVacante(id);
+            fetchAndFilterVacantes();
+        } catch (error) {
+            console.error("Error al eliminar la vacante:", error);
+            // Manejar el error según sea necesario
+        }
     };
 
     return (
