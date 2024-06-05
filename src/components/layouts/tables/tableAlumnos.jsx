@@ -3,6 +3,7 @@ import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, Table
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { getAlumnos } from "@/services/alumnos/alumnoService";
 import React, { useEffect, useState } from "react";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from  "@/components/ui/alert-dialog";
 
 function TableAlumnos() {
   const [alumnos, setAlumnos] = useState([]);
@@ -39,24 +40,71 @@ function TableAlumnos() {
         </TableHeader>
         <TableBody>
           {currentAlumnos.map((nombre) => (
-            <TableRow key={nombre.nombre}>
-              <TableCell className="font-medium">{nombre.nombre}</TableCell>
+            <TableRow key={nombre.name}>
+              <TableCell className="font-medium">{nombre.name}</TableCell>
               <TableCell>{nombre.carrera}</TableCell>
               <TableCell>{nombre.grupo}</TableCell>
               <TableCell>{nombre.matricula}</TableCell>
               <TableCell className="text-center">
-                <Button variant="destructive">Dar de baja</Button>
+                <div>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button
+                        className="mr-2"
+                        onClick={() => console.log("Info")}
+                      >
+                        Editar
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent className="flex flex-col items-center">
+                      <AlertDialogHeader>
+                        <AlertDialogTitle className="text-center">
+                          Editar información
+                        </AlertDialogTitle>
+                        {/* <img src={empresa.imagen} alt={empresa.nombre} /> */}
+                        <AlertDialogDescription className="text-center">
+                          Esta sección es para modificar la información del alumno.
+                        </AlertDialogDescription>
+                        {/* Formulario para modificar la información del alumno */}
+                        <label htmlFor="nombre">Nombre:</label>
+                          <input
+                            type="text"
+                            id="nombre"
+                            name="nombre"
+                            // value={nombre.nombre}
+                          />
+                          <label htmlFor="carrera">Carrera:</label>
+                          <input
+                            type="text"
+                            id="carrera"
+                            name="carrera"
+                            // value={nombre.carrera}
+                          />
+                          <label htmlFor="grupo">Grupo:</label>
+                          <input
+                            type="text"
+                            id="grupo"
+                            name="grupo"
+                            // value={nombre.grupo}
+                          />
+                      </AlertDialogHeader>
+                      <AlertDialogFooter className="flex justify-center">
+                        <AlertDialogCancel>Cerrar</AlertDialogCancel>
+                        <AlertDialogAction>Continuar</AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                  <Button
+                    variant="destructive"
+                    // onClick={() => handleStatusChange(empresa.rfc, "2")}
+                  >
+                    Dar de baja
+                  </Button>
+                </div>
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TableCell colSpan="5" className="text-right">
-              <Button variant="primary">Agregar alumno</Button>
-            </TableCell>
-          </TableRow>
-        </TableFooter>
       </Table>
       <Pagination>
         <PaginationContent>
@@ -82,7 +130,11 @@ function TableAlumnos() {
               </PaginationItem>
             )
           )}
-          <PaginationItem disabled={currentPage === Math.ceil(alumnos.length / alumnosPerPage)}>
+          <PaginationItem
+            disabled={
+              currentPage === Math.ceil(alumnos.length / alumnosPerPage)
+            }
+          >
             <PaginationLink
               href="#"
               onClick={(e) => {

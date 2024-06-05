@@ -50,13 +50,6 @@ function TableAlumnosApplicant() {
             </TableRow>
           ))}
         </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TableCell colSpan="5" className="text-right">
-              <Button variant="primary">Agregar alumno</Button>
-            </TableCell>
-          </TableRow>
-        </TableFooter>
       </Table>
       <Pagination>
         <PaginationContent>
