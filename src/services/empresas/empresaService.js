@@ -18,7 +18,7 @@ export const registrarEmpresa = async (empresaData) => {
 
 export const getEmpresas = async () => {
   try {
-    return await fetch(API.BASEURL + "/company", {
+    return await fetch(API.BASEURL + "/company?status=1", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -31,7 +31,7 @@ export const getEmpresas = async () => {
 
 export const getEmpresasAplicant = async () => {
   try {
-    return await fetch(API.BASEURL + "/company/applicant", {
+    return await fetch(API.BASEURL + "/company?status=0", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -41,3 +41,32 @@ export const getEmpresasAplicant = async () => {
     // Manejo de errores
   }
 }
+
+// Función para cambiar el estado de la empresa: 0 = pendiente, 1 = aprobado, 2 = rechazado, de tipo PATCH
+export const changeStatusEmpresa = async (idEmpresa, status) => {
+  try {
+    return await fetch(API.BASEURL + `/company/${idEmpresa}/status`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status: status }),
+    }).then((res) => res.json());
+  } catch (e) {
+    console.error("Error changing status empresa:", e);
+  }
+};
+
+export const obtenerEmpresa = async (id) => {
+  try {
+    const response = await fetch(`${API.BASEURL}/company/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return await response.json();
+  } catch (e) {
+    console.error("Error fetching user data:", e);
+  }
+};

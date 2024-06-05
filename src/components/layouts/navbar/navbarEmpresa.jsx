@@ -6,7 +6,7 @@ import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { obtenerUsuario } from "@/services/usuario/usuarioService";
 
 
-function NavbarAdmin() {
+function NavbarEmpresa() {
     const navigate = useNavigate();
     const [avatarUrl, setAvatarUrl] = useState("https://www.shutterstock.com/image-vector/blank-avatar-photo-place-holder-600nw-1095249842.jpg");
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -39,18 +39,13 @@ function NavbarAdmin() {
                 <div className="flex h-14 items-center">
                     <div className="text-3xl font-bold">SIEPROF</div>
                     <nav className="ml-auto flex items-center space-x-4">
-                        <Link to={'/homeAdmin'}
+                        <Link to={'/homeEmpresa'}
                             className="font-medium text-sm border-b-2 border-transparent transition-colors hover:text-gray-900 hover:border-gray-100 dark:hover:text-gray-50 dark:hover:border-gray-800"
                         >Inicio</Link>
-                        <Link to={'/registerStudent'}
+                        <Link to={'/pageVacantes'}
                             className="font-medium text-sm border-b-2 border-transparent transition-colors hover:text-gray-900 hover:border-gray-100 dark:hover:text-gray-50 dark:hover:border-gray-800"
-                        >Alumnos</Link>
-                        <Link to={'/pageEmpresas'}
-                            className="font-medium text-sm border-b-2 border-transparent transition-colors hover:text-gray-900 hover:border-gray-100 dark:hover:text-gray-50 dark:hover:border-gray-800"
-                        >Empresas</Link>
-                        <Link to={'/registerAdmin'}
-                            className="font-medium text-sm border-b-2 border-transparent transition-colors hover:text-gray-900 hover:border-gray-100 dark:hover:text-gray-50 dark:hover:border-gray-800"
-                        >Administradores</Link>
+                        >Vacantes</Link>
+                        
                         <Link to='/settingsAdmin'
                             className="flex items-center font-medium text-sm border-b-2 border-transparent transition-colors hover:text-gray-900 hover:border-gray-100 dark:hover:text-gray-50 dark:hover:border-gray-800"
                         >
@@ -77,4 +72,4 @@ function NavbarAdmin() {
     )
 }
 
-export default NavbarAdmin;
+export default NavbarEmpresa;
