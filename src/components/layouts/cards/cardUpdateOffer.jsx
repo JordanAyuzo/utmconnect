@@ -56,12 +56,12 @@ function CardUpdateOffer() {
                                                     </SelectGroup>
                                                 </SelectContent>
                                                 </Select>
-                                            <Label htmlFor="acces_date1">Fecha de apertura:</Label>
+                                            </div>
+                                            <div className='space-y-2 text-left grid w-full items-center'>
+                                                <Label htmlFor="acces_date1">Fecha de apertura:</Label>
                                             <Input className="border border-gray-400" id="acces_date1"/>
                                             <Label htmlFor="acces_date2">Fecha de apertura:</Label>
                                             <Input className="border border-gray-400" id="acces_date2" placeholder="Ingresa la fecha vencimiento"/>
-                                            </div>
-                                            <div className='space-y-2 text-left grid w-full items-center'>
                                             <Label htmlFor="offer_description">Descripción de la vacante:</Label>
                                             <Textarea className="w-[460px] border border-gray-400" id="offer_description" placeholder="Ingresa la descripción de la vacante."/>
                                             <Label htmlFor="offer_responsabilities">Responsabilidades de la vacante:</Label>
