@@ -11,6 +11,7 @@ import PageEmpresas from './components/pages/pageEmpresas/pageEmpresas.jsx';
 import RegisterEmpresa from './components/pages/registerEmpresas/registerEmpresa.jsx';
 import PageVacantes from './components/pages/pageVacantes/pageVacantes.jsx';
 import HomeEmpresa from './components/pages/homEmpresa/homeEmpresa.jsx';
+import SettingsEmpresa from './components/pages/settingsEmpresa/settingsEmpresa.jsx';
 
 function RoutesComponent() {
     return (
@@ -22,6 +23,7 @@ function RoutesComponent() {
                     <Route path="/registerStudent" element={<RegisterStud/>}/>
                     <Route path="/registerAdmin" element={<RegisterAdmin/>}/>
                     <Route path="/settingsStudent" element={<SettingStud/>}/>
+                    <Route path="/settingsEmpresa" element={<SettingsEmpresa/>}/>
                     <Route path="/settingsAdmin" element={<SettingsAdmin/>}/>
                     <Route path="/pageEmpresas" element={<PageEmpresas/>}/>
                     <Route path="/registerEmpresa" element={<RegisterEmpresa/>}/>
