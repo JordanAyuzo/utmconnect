@@ -106,7 +106,7 @@ function TableAlumnos() {
             <TableHead>Grupo</TableHead>
             <TableHead>Semestre</TableHead>
             <TableHead>Matricula</TableHead>
-            <TableCell>CURP</TableCell>
+            <TableHead>CURP</TableHead>
             <TableHead className="text-center">Acción</TableHead>
           </TableRow>
         </TableHeader>

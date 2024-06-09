@@ -94,3 +94,16 @@ export const updateOffer = async (id, updateOfferDto) => {
     throw error;
   }
 };
+
+export const getVacanteForAlumnos = async () => {
+  try {
+    return await fetch(API.BASEURL + "/offers", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => res.json());
+  } catch (e) {
+    // Manejo de errores
+  }
+}
