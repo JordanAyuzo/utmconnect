@@ -75,6 +75,19 @@ export const modificarAlumno = async (id, alumno) => {
   }
 }
 
+export const getAlumnosByCompany = async (rfc) => {
+  try {
+    return await fetch(`${API.BASEURL}/applicants?empresa_rfc=${rfc}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => res.json());
+  } catch (e) {
+    // Manejo de errores
+  }
+}
+
 export const guardarInfo = async (id, info, option) => {
   let info_json = {};
   if (option === 1) {
