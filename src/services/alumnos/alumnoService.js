@@ -129,3 +129,17 @@ export const guardarInfo = async (id, info, option) => {
     throw e;  // Propagar el error para que pueda ser manejado donde se llame a la función
   }
 };
+
+export const applicantToCompany = async (matricula, offerID) => {
+  try {
+    return await fetch(`${API.BASEURL}/applicants`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ matricula: matricula, offer_id: offerID }),
+    }).then((res) => res.json());
+  } catch (e) {
+    console.error("Error al aplicar a la empresa: ", e);
+  }
+}

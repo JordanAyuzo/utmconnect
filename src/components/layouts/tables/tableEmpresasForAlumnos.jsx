@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getVacanteForAlumnos } from "@/services/vacantes/vacanteService";
+import { applicantToCompany } from "@/services/alumnos/alumnoService";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
@@ -21,6 +22,18 @@ function TableEmpresasForAlumnos() {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  const applyToCompany = async (matricula, offerID) => {
+    try {
+      const response = await applicantToCompany(matricula, offerID);
+      if (response.message) {
+        alert(response.message);
+      }
+    } catch (error) {
+      console.error("Error al aplicar a la vacante:", error);
+      alert("Error al aplicar a la vacante");
+    }
+  }
+
   return (
     <div>
       <h2 className="scroll-m-20 border-b pb-2 text-3xl text-center font-semibold tracking-tight first:mt-0">
@@ -29,6 +42,7 @@ function TableEmpresasForAlumnos() {
       <Table>
         <TableHeader>
           <TableRow>
+            <TableHead>ID</TableHead>
             <TableHead>Empresa</TableHead>
             <TableHead>Descripción</TableHead>
             <TableHead>Ubicación</TableHead>
@@ -38,13 +52,26 @@ function TableEmpresasForAlumnos() {
         </TableHeader>
         <TableBody>
           {currentVacantes.map((vacante) => (
-            <TableRow key={vacante.empresa_rfc}>
+            <TableRow key={vacante.offer_id}>
+              <TableCell>{vacante.offer_id}</TableCell>
               <TableCell>{vacante.empresa_rfc}</TableCell>
               <TableCell>{vacante.offer_description}</TableCell>
               <TableCell>{vacante.offer_address}</TableCell>
               <TableCell>{vacante.offer_price}</TableCell>
               <TableCell className="text-center">
-                <Button>Ver</Button>
+                <Button
+                  onClick={() => {
+                    const matricula = Number(sessionStorage.getItem('matricula'));
+                    const offerID = Number(vacante.offer_id);
+                    if (!isNaN(matricula) && !isNaN(offerID)) {
+                      applyToCompany(matricula, offerID)
+                    } else {
+                      alert("Error: matricula u offerID no son válidos.")
+                    }
+                  }}
+                >
+                  Aplicar
+                </Button>
               </TableCell>
             </TableRow>
           ))}
