@@ -7,7 +7,7 @@ import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, Pagi
 function TableEmpresasForAlumnos() {
   const [vacantes, setVacantes] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const vacantesPerPage = 4;
+  const vacantesPerPage = 5;
 
   useEffect(() => {
     getVacanteForAlumnos().then((res) => {
@@ -15,14 +15,11 @@ function TableEmpresasForAlumnos() {
     });
   }, []);
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
-
   const indexOfLastVacante = currentPage * vacantesPerPage;
   const indexOfFirstVacante = indexOfLastVacante - vacantesPerPage;
   const currentVacantes = vacantes.slice(indexOfFirstVacante, indexOfLastVacante);
-  const totalPages = Math.ceil(vacantes.length / vacantesPerPage);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div>
@@ -61,27 +58,35 @@ function TableEmpresasForAlumnos() {
               onClick={(e) => {
                 e.preventDefault();
                 if (currentPage > 1) {
-                  handlePageChange(currentPage - 1);
+                  paginate(currentPage - 1);
                 }
               }}
             >
               Anterior
             </PaginationLink>
           </PaginationItem>
-          {[...Array(totalPages)].map((_, i) => (
-            <PaginationItem key={i}>
-              <PaginationLink href="#" onClick={() => handlePageChange(i + 1)}>
-                {i + 1}
-              </PaginationLink>
-            </PaginationItem>
-          ))}
-          <PaginationItem disabled={currentPage === totalPages}>
+          {[...Array(Math.ceil(vacantes.length / vacantesPerPage)).keys()].map(
+            (num) => (
+              <PaginationItem key={num}>
+                <PaginationLink href="#" onClick={() => paginate(num + 1)}>
+                  {num + 1}
+                </PaginationLink>
+              </PaginationItem>
+            )
+          )}
+          <PaginationItem
+            disabled={
+              currentPage === Math.ceil(vacantes.length / vacantesPerPage)
+            }
+          >
             <PaginationLink
               href="#"
               onClick={(e) => {
                 e.preventDefault();
-                if (currentPage < totalPages) {
-                  handlePageChange(currentPage + 1);
+                if (
+                  currentPage < Math.ceil(vacantes.length / vacantesPerPage)
+                ) {
+                  paginate(currentPage + 1);
                 }
               }}
             >

@@ -75,13 +75,27 @@ export const modificarAlumno = async (id, alumno) => {
   }
 }
 
-export const getAlumnosByCompany = async (rfc) => {
+export const getAlumnosByCompany = async (rfc, status) => {
   try {
-    return await fetch(`${API.BASEURL}/applicants?empresa_rfc=${rfc}`, {
+    return await fetch(`${API.BASEURL}/applicants?status=${status}&empresa_rfc=${rfc}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
+    }).then((res) => res.json());
+  } catch (e) {
+    // Manejo de errores
+  }
+}
+
+export const changeAlumnosByCompanyStatus = async (id, status) => {
+  try {
+    return await fetch(`${API.BASEURL}/applicants/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status: status }),
     }).then((res) => res.json());
   } catch (e) {
     // Manejo de errores
