@@ -13,7 +13,6 @@ function TableEmpresasForAlumnos({tipoVacante} ) {
   const [vacantes, setVacantes] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const vacantesPerPage = 5;
-  const vacantesPerPage = 4;
   let error = null;
   const userNumber = sessionStorage.getItem("userNumber")
   if(tipoVacante === 1){
