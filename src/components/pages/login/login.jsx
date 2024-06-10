@@ -37,12 +37,13 @@ function Login() {
                     navigate('/homeAdmin')
                 }
                 if(response.user.user_type == '1'){
+                    const estudianteResponse = await obtenerUsuario(response.user.user_number);
+                    sessionStorage.setItem('matricula', estudianteResponse.user_number)
                     navigate('/homestudent')
                 }
                 if(response.user.user_type == '2') {
                     const empresaResponse = await obtenerUsuario(response.user.user_number);
                     sessionStorage.setItem('rfc', empresaResponse.user_number)
-                    console.log(empresaResponse.user_number)
                     navigate('/homeEmpresa')
                 }
             } else {

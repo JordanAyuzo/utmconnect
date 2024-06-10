@@ -4,14 +4,14 @@ import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, Pagi
 import { getAlumnos, getAlumnosByCompany, changeAlumnosByCompanyStatus } from "@/services/alumnos/alumnoService";
 import React, { useEffect, useState } from "react";
 
-function TableAlumnosApplicant() {
+function TableAlumnosApplicantAcepted() {
   const [alumnos, setAlumnos] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const alumnosPerPage = 4;
 
   useEffect(() => {
     const rfc = sessionStorage.getItem('rfc');
-    getAlumnosByCompany(rfc, "0").then((response) => {
+    getAlumnosByCompany(rfc, "1").then((response) => {
       setAlumnos(response.applicants);
     });
   }, []);
@@ -76,13 +76,7 @@ function TableAlumnosApplicant() {
                     variant="destructive"
                     onClick={() => handleStatusChange(nombre.applicant_applicant_id, "2")}
                   >
-                    Rechazar
-                  </Button>
-                  <Button
-                    className="mr-2"
-                    onClick={() => handleStatusChange(nombre.applicant_applicant_id, "1")}
-                  >
-                    Aceptar
+                    Finalizar
                   </Button>
                 </div>
               </TableCell>
@@ -137,4 +131,4 @@ function TableAlumnosApplicant() {
   );
 }
 
-export default TableAlumnosApplicant;
+export default TableAlumnosApplicantAcepted;
