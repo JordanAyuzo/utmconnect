@@ -21,6 +21,19 @@ function TableEmpresasApplicant() {
     indexOfLastEmpresa
   );
 
+  const getStatus = (status) => {
+    switch (status) {
+      case "0":
+        return "Pendiente";
+      case "1":
+        return "Aprobado";
+      case "2":
+        return "Rechazado";
+      default:
+        return "Desconocido";
+    }
+  };
+
   const handleStatusChange = (idEmpresa, status) => {
     changeStatusEmpresa(idEmpresa, status).then(() => {
       getEmpresasAplicant().then(setEmpresas);
@@ -53,7 +66,7 @@ function TableEmpresasApplicant() {
               <TableCell>{empresa.descripcion}</TableCell>
               <TableCell>{empresa.jefe_inmediato}</TableCell>
               <TableCell>{empresa.departamento}</TableCell>
-              <TableCell>{empresa.status}</TableCell>
+              <TableCell>{getStatus(empresa.status)}</TableCell>
               <TableCell className="text-right">
                 <div className="flex space-x-2">
                   <AlertDialog>
