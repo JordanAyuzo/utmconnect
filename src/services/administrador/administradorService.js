@@ -70,3 +70,16 @@ export const updateAdmins = async (id, oldPassword, newPassword) => {
     console.error("Error al cambiar la contraseña:", e);
   }
 };
+
+export const eliminarAdmins = async (id) => {
+  try {
+    return await fetch(`${API.BASEURL}/user/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => res.json());
+  } catch (e) {
+    console.error("Error al eliminar el administrador:", e);
+  }
+}

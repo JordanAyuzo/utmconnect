@@ -145,35 +145,35 @@ function SettingsEmpresa() {
                             <div className="grid grid-cols-3 items-start gap-6 text-left ">
                                 <div className="space-y-2">
                                     <Label htmlFor="userNumber">RFC:</Label>
-                                    <Input value={userDataEmpresa.RFC} id="userNumber" readOnly/>
+                                    <Input value={userDataEmpresa.RFC} id="userNumber" readOnly disabled/>
                                 </div>
                                 <div className="space-y-2">
                                     <Label htmlFor="email">Correo electrónico: </Label>
-                                    <Input value={userData.email} id="email" readOnly/>
+                                    <Input value={userData.email} id="email" readOnly disabled/>
                                 </div>
                                 <div className="space-y-2">
                                     <Label htmlFor="direccion">Dirección: </Label>
-                                    <Input value={userDataEmpresa.Direccion} id="direccion" readOnly/>
+                                    <Input value={userDataEmpresa.Direccion} id="direccion" readOnly disabled/>
                                 </div>
                             </div>
                             <div className="grid grid-cols-3 items-start gap-6 text-left ">
                                 <div className="space-y-2">
                                     <Label htmlFor="giro">Giro:</Label>
-                                    <Input value={userDataEmpresa.Giro} id="giro" readOnly/>
+                                    <Input value={userDataEmpresa.Giro} id="giro" readOnly disabled/>
                                 </div>
                                 <div className="space-y-2">
                                     <Label htmlFor="jefeInmediato">Jefe inmediato:</Label>
-                                    <Input value={userDataEmpresa.JefeInmediato} id="jefeInmediato" readOnly/>
+                                    <Input value={userDataEmpresa.JefeInmediato} id="jefeInmediato" readOnly disabled/>
                                 </div>
                                 <div className="space-y-2">
                                     <Label htmlFor="departamento">Departamento:</Label>
-                                    <Input value={userDataEmpresa.Departamento} id="departamento" readOnly/>
+                                    <Input value={userDataEmpresa.Departamento} id="departamento" readOnly disabled/>
                                 </div>
                             </div>
                             <div className="grid grid-cols-1 items-start gap-6 text-left ">
                                 <div className="space-y-2">
                                     <Label htmlFor="descripcion">Descripción:</Label>
-                                    <Input value={userDataEmpresa.Descripcion} id="descripcion" readOnly/>
+                                    <Input value={userDataEmpresa.Descripcion} id="descripcion" readOnly disabled/>
                                 </div>
                             </div>
                         </CardContent>

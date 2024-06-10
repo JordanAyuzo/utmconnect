@@ -44,9 +44,9 @@ function NavbarStud() {
                         <Link to='/pageEmpresaForAlumnos'
                             className="font-medium text-sm border-b-2 border-transparent transition-colors hover:text-gray-900 hover:border-gray-100 dark:hover:text-gray-50 dark:hover:border-gray-800"
                         >Empresas</Link>
-                        <Link to='/'
+                        <Link to='/historyAlumno'
                             className="font-medium text-sm border-b-2 border-transparent transition-colors hover:text-gray-900 hover:border-gray-100 dark:hover:text-gray-50 dark:hover:border-gray-800"
-                        >Notificaciones</Link>
+                        >Historial</Link>
                         <Link to='/settingsStudent'
                             className="flex items-center font-medium text-sm border-b-2 border-transparent transition-colors hover:text-gray-900 hover:border-gray-100 dark:hover:text-gray-50 dark:hover:border-gray-800"
                         >
