@@ -57,6 +57,36 @@ export const getCV= async (id) => {
   }
 };
 
+export const modificarAlumno = async (id, alumno) => {
+  try {
+    const response = await fetch(`${API.BASEURL}/student/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(alumno),
+    });
+
+    const data = await response.json();
+
+    return data;
+  } catch (e) {
+    console.error("Error al modificar el alumno:", e);
+  }
+}
+
+export const getAlumnosByCompany = async (rfc) => {
+  try {
+    return await fetch(`${API.BASEURL}/applicants?empresa_rfc=${rfc}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => res.json());
+  } catch (e) {
+    // Manejo de errores
+  }
+}
 
 export const guardarInfo = async (id, info, option) => {
   let info_json = {};

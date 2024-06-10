@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { obtenerUsuario } from "@/services/usuario/usuarioService"; // Importar la función obtenerUsuario
+import PageEmpresaForAlumnos from '@/components/pages/pageEmpresaForAlumnos/pageEmpresaForAlumnos';
 
 function NavbarStud() {
     const navigate = useNavigate();
@@ -40,7 +41,7 @@ function NavbarStud() {
                         <Link to='/homeStudent'
                             className="font-medium text-sm border-b-2 border-transparent transition-colors hover:text-gray-900 hover:border-gray-100 dark:hover:text-gray-50 dark:hover:border-gray-800"
                         >Inicio</Link>
-                        <Link to='/'
+                        <Link to='/pageEmpresaForAlumnos'
                             className="font-medium text-sm border-b-2 border-transparent transition-colors hover:text-gray-900 hover:border-gray-100 dark:hover:text-gray-50 dark:hover:border-gray-800"
                         >Empresas</Link>
                         <Link to='/'
