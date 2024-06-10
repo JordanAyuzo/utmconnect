@@ -88,6 +88,22 @@ export const getAlumnosByCompany = async (rfc) => {
   }
 }
 
+
+export const getVacanteRecomendadas = async (id) => {
+  try {
+    const response = await fetch(`${API.BASEURL}/student/recommendedOffer/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return await response.json();
+  } catch (e) {
+    console.error("Error fetching user data:", e);
+  }
+};
+
+
 export const guardarInfo = async (id, info, option) => {
   let info_json = {};
   if (option === 1) {

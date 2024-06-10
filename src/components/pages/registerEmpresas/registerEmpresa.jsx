@@ -43,6 +43,31 @@ export function EmpresaForm() {
     },
   });
 
+  const [empresa, setEmpresa] = useState({
+    name: '',
+    paternal_sn: '',
+    maternal_sn: '',
+    email: '',
+    rfc: '',
+    password: '',
+    access_date: "2024-05-22T12:34:56Z",
+    user_type: "2",
+    direccion: '',
+    giro: '',
+    descripcion: '',    
+    jefe_inmediato: "La calaca chida",
+    departamento: '',
+    status: '0' // ESPERA
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEmpresa({
+      ...empresa,
+      [name]: name === 'rfc' ? Number(value) : value,
+    });
+  };
+
   const onSubmit = async (data) => {
     try {
       const response = await registrarEmpresa({ ...data, access_date: "2024-05-22T12:34:56Z", user_type: "2", jefe_inmediato: "La calaca chida", status: '0' });
