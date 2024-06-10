@@ -1,20 +1,46 @@
 import React, { useEffect, useState } from "react";
 import { getVacanteForAlumnos } from "@/services/vacantes/vacanteService";
 import { applicantToCompany } from "@/services/alumnos/alumnoService";
+import { getVacanteRecomendadas } from "@/services/alumnos/alumnoService"
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 
-function TableEmpresasForAlumnos() {
+
+
+
+function TableEmpresasForAlumnos({tipoVacante} ) {
   const [vacantes, setVacantes] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const vacantesPerPage = 5;
+  const vacantesPerPage = 4;
+  let error = null;
+  const userNumber = sessionStorage.getItem("userNumber")
+  if(tipoVacante === 1){
+    useEffect(() => {
+      getVacanteForAlumnos().then((res) => {
+        setVacantes(res);
+      });
+    }, []);
 
-  useEffect(() => {
-    getVacanteForAlumnos().then((res) => {
-      setVacantes(res);
-    });
-  }, []);
+  }else{
+    //try catch para evitar error de vacantes 
+
+    useEffect(() => {
+      const fetchVacantes = async () => {
+        try {
+          const res = await getVacanteRecomendadas(userNumber);
+          setVacantes(res);
+        } catch (err) {
+           error = true || 'Ocurrió un error al obtener las vacantes.';
+          setError('No se pudo encontrar al estudiante.');
+        }
+      };
+  
+      fetchVacantes();
+    }, [userNumber]);
+  }
+
 
   const indexOfLastVacante = currentPage * vacantesPerPage;
   const indexOfFirstVacante = indexOfLastVacante - vacantesPerPage;

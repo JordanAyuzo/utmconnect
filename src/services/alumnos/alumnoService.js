@@ -88,6 +88,7 @@ export const getAlumnosByCompany = async (rfc, status) => {
   }
 }
 
+
 export const changeAlumnosByCompanyStatus = async (id, status) => {
   try {
     return await fetch(`${API.BASEURL}/applicants/${id}`, {
@@ -101,6 +102,20 @@ export const changeAlumnosByCompanyStatus = async (id, status) => {
     // Manejo de errores
   }
 }
+export const getVacanteRecomendadas = async (id) => {
+  try {
+    const response = await fetch(`${API.BASEURL}/student/recommendedOffer/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return await response.json();
+  } catch (e) {
+    console.error("Error fetching user data:", e);
+  }
+};
+
 
 export const guardarInfo = async (id, info, option) => {
   let info_json = {};

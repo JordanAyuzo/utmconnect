@@ -175,13 +175,13 @@ function PageVacantes() {
                                     <div className="grid grid-cols-2 items-start gap-6">
                                         <div className=" flex flex-col text-left space-y-2">
                                         <Label htmlFor="empresa_rfc">RFC:</Label>
-                                        <Input className="border border-gray-400" placeholder="Ingresa el RFC de la empresa" readOnly value={empresa_rfc} onChange={(e) => setoffername(e.target.value)} id="empresa_rfc"/>
+                                        <Input className="border border-gray-400" placeholder="Ingresa el RFC de la empresa" readOnly disabled value={empresa_rfc} onChange={(e) => setoffername(e.target.value)} id="empresa_rfc"/>
                                         <Label htmlFor="offer_name">Nombre de la vacante:</Label>
                                         <Input className="border border-gray-400" id="offer_name" placeholder="Ingresa el nombre de la vacante" value={offer_name} onChange={(e) => setoffername(e.target.value)}/>                                    
                                         <Label htmlFor="offer_price">Remuneración:</Label>
                                         <Input className="border border-gray-400" id="offer_price" placeholder="Ingresa la remuneración de la vacante" value={offer_price} onChange={(e) => setofferprice(e.target.value)}/>
                                         <Label htmlFor="offer_address">Dirección:</Label>
-                                        <Input className="border border-gray-400" id="offer_address" placeholder="Ingresa la remuneración de la vacante" readOnly value={offer_address} onChange={(e) => setofferaddress(e.target.value)}/>
+                                        <Input className="border border-gray-400" id="offer_address" placeholder="Ingresa la remuneración de la vacante" readOnly disabled value={offer_address} onChange={(e) => setofferaddress(e.target.value)}/>
                                         <Select>
                                         <Label htmlFor="offer_work_mode">Modalidad:</Label>
                                             <SelectTrigger className="w-[600px] border border-gray-400"

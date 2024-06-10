@@ -2,7 +2,10 @@ import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { getAdministrador } from "@/services/administrador/administradorService";
+import { eliminarAdmins } from "@/services/administrador/administradorService";
 import React, { useEffect, useState } from "react";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from  "@/components/ui/alert-dialog";
+
 
 function TableAdministrador() {
   const [administrador, setAdministrador] = useState([]);
@@ -15,6 +18,18 @@ function TableAdministrador() {
       setAdministrador(filteredAdministrador);
     });
   }, []);
+
+  const handleEliminarAdmin = async (id) => {
+    try {
+        await eliminarAdmins(id);
+        const updatedAdministradores = await getAdministrador();
+        const filteredAdministrador = updatedAdministradores.filter((admin) => admin.user_type === '0');
+        setAdministrador(filteredAdministrador);
+
+    } catch (error) {
+        console.error("Error al eliminar administrador:", error);
+    }
+};
 
   const indexOfLastAdministrador = currentPage * administradorPerPage;
   const indexOfFirstAdministrador = indexOfLastAdministrador - administradorPerPage;
@@ -47,7 +62,24 @@ function TableAdministrador() {
               <TableCell className="font-medium">{customers.maternal_sn}</TableCell>
               <TableCell>{customers.email}</TableCell>
               <TableCell className="text-center">
-                <Button variant="destructive">Eliminar</Button>
+                <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                            <Button variant="destructive">Eliminar</Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent className="max-w-md"> {/* Cambiado a max-w-md */}
+                            <AlertDialogHeader>
+                                <AlertDialogTitle>¿Estás absolutamente seguro?</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                    Esta acción no se puede deshacer. Esto eliminará permanentemente la
+                                    vacante y eliminará sus datos de nuestros servidores.
+                                </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                                <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                                <AlertDialogAction onClick={() => handleEliminarAdmin(customers.user_number)}>Continuar</AlertDialogAction>
+                            </AlertDialogFooter>
+                        </AlertDialogContent>
+                    </AlertDialog>
               </TableCell>
             </TableRow>
           ))}

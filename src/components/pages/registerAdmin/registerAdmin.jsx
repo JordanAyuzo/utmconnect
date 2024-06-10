@@ -45,25 +45,25 @@ function registerAdmin() {
         setError('');
 
         try {
-          const response = await registerAdmins(user_number, name, paternal_sn, maternal_sn, email, password, accesDate);
-          if (response.ok) {
-            alert('Administrador registrado exitosamente');
-            // Ir a la lista de administradores
-            navigate('/registerAdmin')
-          } else {
-            setError(response.message || 'Error al registrar el administrador');
-          }
-        if (!response.ok) {
-      throw new Error(`HTTP error status: ${response.status}`);
-    }
-    return await response.json();
-  } catch (e) {
-    console.error(e);
-    throw e; // O maneja el error de manera adecuada
-  } finally {
-            setLoading(false);
+            const response = await registerAdmins(user_number, name, paternal_sn, maternal_sn, email, password, accesDate);
+            if (response.ok) {
+                alert('Administrador registrado exitosamente');
+                // Ir a la lista de administradores
+                navigate('/registerAdmin')
+            } else {
+                setError(response.message || 'Error al registrar el administrador');
+            }
+            if (!response.ok) {
+                throw new Error(`HTTP error status: ${response.status}`);
+            }
+                return await response.json();
+        } catch (e) {
+            console.error(e);
+            throw e; // O maneja el error de manera adecuada
+        } finally {
+                setLoading(false);
         }
-      };
+    };
 
     return (
         <div>
