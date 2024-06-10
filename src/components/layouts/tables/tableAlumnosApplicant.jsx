@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
-import { getAlumnos } from "@/services/alumnos/alumnoService";
+import { getAlumnos, getAlumnosByCompany } from "@/services/alumnos/alumnoService";
+import { getEmpresas } from "@/services/empresas/empresaService";
 import React, { useEffect, useState } from "react";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from  "@/components/ui/alert-dialog";
 
 function TableAlumnosApplicant() {
   const [alumnos, setAlumnos] = useState([]);
@@ -10,8 +12,9 @@ function TableAlumnosApplicant() {
   const alumnosPerPage = 4;
 
   useEffect(() => {
-    getAlumnos().then((res) => {
-      setAlumnos(res);
+    const rfc = sessionStorage.getItem('rfc');
+    getAlumnosByCompany(rfc).then((response) => {
+      setAlumnos(response.applicants);
     });
   }, []);
 
@@ -20,6 +23,19 @@ function TableAlumnosApplicant() {
   const currentAlumnos = alumnos.slice(indexOfFirstAlumno, indexOfLastAlumno);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const getStatus = (status) => {
+    switch (status) {
+      case "0":
+        return "Pendiente";
+      case "1":
+        return "Aprobado";
+      case "2":
+        return "Rechazado";
+      default:
+        return "Desconocido";
+    }
+  }
 
   return (
     <div>
@@ -31,21 +47,37 @@ function TableAlumnosApplicant() {
         <TableHeader>
           <TableRow>
             <TableHead className="w-[100px]">Nombre</TableHead>
-            <TableHead>Carrera</TableHead>
-            <TableHead>Grupo</TableHead>
             <TableHead>Matricula</TableHead>
+            <TableHead>CV</TableHead>
+            <TableHead>Correo</TableHead>
+            <TableHead>Estado</TableHead>
             <TableHead className="text-center">Acción</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {currentAlumnos.map((nombre) => (
-            <TableRow key={nombre.nombre}>
-              <TableCell className="font-medium">{nombre.nombre}</TableCell>
-              <TableCell>{nombre.carrera}</TableCell>
-              <TableCell>{nombre.grupo}</TableCell>
-              <TableCell>{nombre.matricula}</TableCell>
+            <TableRow key={nombre.user_name}>
+              <TableCell className="font-medium">{nombre.user_name} {nombre.user_paternal_sn}</TableCell>
+              <TableCell>{nombre.student_matricula}</TableCell>
+              <TableCell>{nombre.student_cv_link}</TableCell>
+              <TableCell>{nombre.user_email}</TableCell>
+              <TableCell>{getStatus(nombre.applicant_status)}</TableCell>
               <TableCell className="text-center">
-                <Button variant="destructive">Dar de baja</Button>
+                <div>
+                  <Button
+                    className="mr-2"
+                    variant="destructive"
+                    // onClick={() => handleStatusChange(empresa.rfc, "2")}
+                  >
+                    Rechazar
+                  </Button>
+                  <Button
+                    className="mr-2"
+                    // onClick={() => handleStatusChange(empresa.rfc, "1")}
+                  >
+                    Aceptar
+                  </Button>
+                </div>
               </TableCell>
             </TableRow>
           ))}
@@ -75,7 +107,11 @@ function TableAlumnosApplicant() {
               </PaginationItem>
             )
           )}
-          <PaginationItem disabled={currentPage === Math.ceil(alumnos.length / alumnosPerPage)}>
+          <PaginationItem
+            disabled={
+              currentPage === Math.ceil(alumnos.length / alumnosPerPage)
+            }
+          >
             <PaginationLink
               href="#"
               onClick={(e) => {
