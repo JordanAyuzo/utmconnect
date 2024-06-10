@@ -1,4 +1,3 @@
-import { Home } from "lucide-react";
 import * as API from "../utils/consts.js";
 
 export const getVacante = async () => {
