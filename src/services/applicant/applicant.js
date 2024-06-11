@@ -39,6 +39,9 @@ export const eliminarHistorialAlumno = async (id) => {
   }
 };
 
+
+
+
 export const updateHistorialAlumno = async (id, updateHistorialAlumnoDto) => {
   try {
     const response = await fetch(`${API.BASEURL}/applicants/${id}`, {

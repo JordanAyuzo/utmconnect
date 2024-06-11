@@ -26,8 +26,7 @@ function PageEmpresaForAlumnos() {
                                 <Link 
                                     onClick={() => setSelectedSection('recommended-vacancies')}
                                     className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-gray-900 dark:hover:text-gray-50 ${selectedSection === 'recommended-vacancies' ? 'bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-gray-50' : 'text-gray-500 dark:text-gray-400'}`}
-                                >Vacantes para ti</Link>
-                                
+                                >Vacantes para ti</Link>  
                             </nav>
                         </div>
                     </div>
