@@ -14,6 +14,7 @@ import HomeEmpresa from './components/pages/homEmpresa/homeEmpresa.jsx';
 import SettingsEmpresa from './components/pages/settingsEmpresa/settingsEmpresa.jsx';
 import HistoryAlumno from './components/pages/historyAlumno/historyAlumno.jsx';
 import PageEmpresaForAlumnos from './components/pages/pageEmpresaForAlumnos/pageEmpresaForAlumnos.jsx';
+import  ViewOffer from './components/pages/viewOffer/viewOffer.jsx'
 
 function RoutesComponent() {
     return (
@@ -33,6 +34,8 @@ function RoutesComponent() {
                     <Route path="/homeEmpresa" element={<HomeEmpresa/>}/>
                     <Route path="/historyAlumno" element={<HistoryAlumno/>}/>
                     <Route path="/pageEmpresaForAlumnos" element={<PageEmpresaForAlumnos/>}/>
+                    <Route path="/viewOffer" element={<ViewOffer/>}/>
+
                 </Routes>
         </div>
     );

@@ -25,7 +25,7 @@ function CardSchoolStudent() {
         if (data) {
           setUserData({
             matricula: data.matricula,
-            carrera: "Ing Computación",//data.carrera,
+            carrera:data.carrera,
             semestre: data.semestre, // Ajusta según cómo se divide el nombre completo en tu backend
             Grupo: data.grupo, // Ajusta según cómo se divide el nombre completo en tu backend
           });

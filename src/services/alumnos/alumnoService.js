@@ -117,6 +117,22 @@ export const getVacanteRecomendadas = async (id) => {
 };
 
 
+//ver las vacantes que aun no ah aplicado: 
+export const getVacanteSinAplicar = async (id) => {
+  try {
+    const response = await fetch(`${API.BASEURL}/applicants/free/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return await response.json();
+  } catch (e) {
+    console.error("Error fetching user data:", e);
+  }
+};
+
+
 export const guardarInfo = async (id, info, option) => {
   let info_json = {};
   if (option === 1) {
@@ -147,14 +163,23 @@ export const guardarInfo = async (id, info, option) => {
 
 export const applicantToCompany = async (matricula, offerID) => {
   try {
-    return await fetch(`${API.BASEURL}/applicants`, {
+    const response = await fetch(`${API.BASEURL}/applicants`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ matricula: matricula, offer_id: offerID }),
-    }).then((res) => res.json());
+    });
+
+    if (!response.ok) {
+      // Lanza un error si la respuesta no es OK (2xx)
+      const errorResponse = await response.json();
+      throw new Error(`Error ${response.status}: ${errorResponse.message || response.statusText}`);
+    }
+
+    return await response.json();
   } catch (e) {
     console.error("Error al aplicar a la empresa: ", e);
+    throw e; // Rethrow the error to be handled by the caller if needed
   }
-}
+};
