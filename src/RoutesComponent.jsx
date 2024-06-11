@@ -13,6 +13,7 @@ import PageVacantes from './components/pages/pageVacantes/pageVacantes.jsx';
 import HomeEmpresa from './components/pages/homEmpresa/homeEmpresa.jsx';
 import SettingsEmpresa from './components/pages/settingsEmpresa/settingsEmpresa.jsx';
 import HistoryAlumno from './components/pages/historyAlumno/historyAlumno.jsx';
+import PageEmpresaForAlumnos from './components/pages/pageEmpresaForAlumnos/pageEmpresaForAlumnos.jsx';
 
 function RoutesComponent() {
     return (
@@ -31,6 +32,7 @@ function RoutesComponent() {
                     <Route path="/pageVacantes" element={<PageVacantes/>}/>
                     <Route path="/homeEmpresa" element={<HomeEmpresa/>}/>
                     <Route path="/historyAlumno" element={<HistoryAlumno/>}/>
+                    <Route path="/pageEmpresaForAlumnos" element={<PageEmpresaForAlumnos/>}/>
                 </Routes>
         </div>
     );

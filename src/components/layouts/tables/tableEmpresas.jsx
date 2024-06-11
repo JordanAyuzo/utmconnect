@@ -20,6 +20,19 @@ function TableEmpresas() {
     indexOfLastEmpresa
   );
 
+  const getStatus = (status) => {
+    switch (status) {
+      case "0":
+        return "Pendiente";
+      case "1":
+        return "Aprobado";
+      case "2":
+        return "Rechazado";
+      default:
+        return "Desconocido";
+    }
+  };
+
   // Función para cambiar el estado de la empresa: 0 = pendiente, 1 = aprobado, 2 = rechazado
   const handleStatusChange = (idEmpresa, status) => {
     changeStatusEmpresa(idEmpresa, status).then(() => {
@@ -53,7 +66,7 @@ function TableEmpresas() {
               <TableCell>{empresa.descripcion}</TableCell>
               <TableCell>{empresa.jefe_inmediato}</TableCell>
               <TableCell>{empresa.departamento}</TableCell>
-              <TableCell>{empresa.status}</TableCell>
+              <TableCell>{getStatus(empresa.status)}</TableCell>
               <TableCell className="text-right">
                 <Button 
                   variant="destructive"

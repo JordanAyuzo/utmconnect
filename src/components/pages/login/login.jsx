@@ -14,6 +14,7 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { useNavigate, } from 'react-router-dom';
+import { obtenerUsuario } from '@/services/usuario/usuarioService';
 
 function Login() {
     const [usuario, setusuario] = useState('');
@@ -36,9 +37,13 @@ function Login() {
                     navigate('/homeAdmin')
                 }
                 if(response.user.user_type == '1'){
+                    const estudianteResponse = await obtenerUsuario(response.user.user_number);
+                    sessionStorage.setItem('matricula', estudianteResponse.user_number)
                     navigate('/homestudent')
                 }
                 if(response.user.user_type == '2') {
+                    const empresaResponse = await obtenerUsuario(response.user.user_number);
+                    sessionStorage.setItem('rfc', empresaResponse.user_number)
                     navigate('/homeEmpresa')
                 }
             } else {
