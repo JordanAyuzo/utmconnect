@@ -6,6 +6,7 @@ import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, Table
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from  "@/components/ui/alert-dialog";
 import { getHistorialAlumno } from '@/services/applicant/applicant';
 import { Pagination, PaginationContent, PaginationItem, PaginationLink } from "@/components/ui/pagination";
+import { obtenerAlumno } from "@/services/alumnos/alumnoService"; // Importar las
 
 import {
     Tabs,
@@ -43,13 +44,44 @@ function HistoryAlumno() {
     const indexOfFirstHistory = indexOfLastHistory - historyPerPage;
     const currentHistorial = historial.slice(indexOfFirstHistory, indexOfLastHistory);
 
+    const [userData, setUserData] = useState({
+        userNumber: 0,
+        Direccion: "",
+        Matricula: 0,
+    });
+
+    const fetchAndFilterHistory = async () => {
+        const userNumber = sessionStorage.getItem("userNumber");
+        if (userNumber) {
+            try {
+                const data = await obtenerAlumno(userNumber);
+                if (data) {
+                    setUserData({
+                        Matricula: data.matricula,
+                    });
+                    const res = await getHistorialAlumno();
+                    // Filtrar el historial donde offer_empresa_rfc sea igual a userNumber
+                    const filteredHistorial = res.applicants.filter(historial => historial.student_matricula === data.matricula && historial.applicant_status === "1");
+                    setHistorial(filteredHistorial);
+                }
+            } catch (error) {
+                console.error("Error fetching and filtering history:", error);
+                // Manejar el error según sea necesario
+            }
+        }
+    };
+
     useEffect(() => {
-      getHistorialAlumno().then((res) => {
-          // Filtrar el historial por estatus "Aceptado" (valor 0)
-          const historialFiltrado = res.applicants.filter((item) => item.applicant_status === "1");
-          setHistorial(historialFiltrado);
-      });
-  }, []);
+        const fetchData = async () => {
+            try {
+                fetchAndFilterHistory();
+            } catch (error) {
+                console.error("Error fetching history:", error);
+            }
+        };
+
+    fetchData();
+    }, []);
 
   return (
     <div>
@@ -69,27 +101,25 @@ function HistoryAlumno() {
                       <Table>
             <TableHeader>
             <TableRow>
-                <TableHead className="text-center">Oferta</TableHead>
-                <TableHead className="text-center">RFC de empresa</TableHead>
+                <TableHead className="text-center">Nombre de la empresa</TableHead>
                 <TableHead className="text-center">Nombre</TableHead>
                 <TableHead className="text-center">Apellido paterno</TableHead>
                 <TableHead className="text-center">matrícula</TableHead>
-                <TableHead className="text-center">Estatus</TableHead>
                 <TableHead className="text-center">email</TableHead>
                 <TableHead className="text-center">Fecha</TableHead>
+                <TableHead className="text-center">Estatus</TableHead>
             </TableRow>
             </TableHeader>
             <TableBody>
             {currentHistorial.map((historial) => (
-                <TableRow key={historial.applicant_offer_id}>
-                <TableCell className="font-medium">{historial.applicant_offer_id}</TableCell>
-                <TableCell>{historial.offer_empresa_rfc}</TableCell>
+                <TableRow key={historial.applicant_applicant_id}>
+                <TableCell className="font-medium">{historial.company_user_name}</TableCell>
                 <TableCell>{historial.user_name}</TableCell>
                 <TableCell>{historial.user_paternal_sn}</TableCell>
                 <TableCell>{historial.student_matricula}</TableCell>
-                <TableCell>{getStatusText(historial.applicant_status)}</TableCell>
                 <TableCell>{historial.user_email}</TableCell>
-                <TableCell>{historial.applicant_createdAt}</TableCell>
+                <TableCell>{historial.applicant_createdAt.split('T')[0]}</TableCell>
+                <TableCell>{getStatusText(historial.applicant_status)}</TableCell>
                 </TableRow>
             ))}
             </TableBody>
@@ -163,13 +193,13 @@ function HistoryAlumno() {
 }
 
 function getStatusText(statusNumber) {
-  const statusMap = {
-      0: "Pendiente",
-      1: "Aceptado",
-      2: "Rechazado"
-  };
+    const statusMap = {
+            0: <span style={{ color: "blue" }}>Pendiente</span>,
+            1: <span style={{ color: "green" }}>Aceptado</span>,
+            2: <span style={{ color: "red" }}>Rechazado</span>
+    };
 
-  return statusMap[statusNumber] || "Desconocido";
+    return statusMap[statusNumber] || "Desconocido";
 }
 
 export default HistoryAlumno
