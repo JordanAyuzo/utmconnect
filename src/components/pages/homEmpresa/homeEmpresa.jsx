@@ -20,7 +20,7 @@ function HomeEmpresa() {
             <TabsContent value="revisar">
               <Card>
                 <CardHeader>
-                  <CardTitle>Revisar solicitutes de alumnos</CardTitle>
+                  <CardTitle>Lista de solicitudes de estudiantes para las vacantes</CardTitle>
                   <CardDescription>
                     Revisa las solicitudes de alumnos que han aplicado a tus vacantes.
                   </CardDescription>
