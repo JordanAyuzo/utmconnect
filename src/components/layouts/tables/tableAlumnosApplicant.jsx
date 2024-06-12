@@ -22,19 +22,6 @@ function TableAlumnosApplicant() {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  const getStatus = (status) => {
-    switch (status) {
-      case "0":
-        return "Pendiente";
-      case "1":
-        return "Aprobado";
-      case "2":
-        return "Rechazado";
-      default:
-        return "Desconocido";
-    }
-  }
-
   const handleStatusChange = (idApplicant, status) => {
     changeAlumnosByCompanyStatus(idApplicant, status).then(() => {
       const rfc = sessionStorage.getItem('rfc');
@@ -44,31 +31,37 @@ function TableAlumnosApplicant() {
     });
   }
 
+  const downloadCV = (cvLink) => {
+    window.open(cvLink, '_blank'); // Abre el enlace en una nueva ventana del navegador
+  }
+
   return (
     <div>
-      <h2 className="scroll-m-20 border-b pb-2 text-3xl text-center font-semibold tracking-tight first:mt-0">
-        Lista de alumnos postulantes
-      </h2>
       <Table>
         {/* <TableCaption>Una lista de los alumnos.</TableCaption> */}
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">Nombre</TableHead>
-            <TableHead>Matricula</TableHead>
-            <TableHead>CV</TableHead>
-            <TableHead>Correo</TableHead>
-            <TableHead>Estado</TableHead>
+            <TableHead className="w-[100px] text-center">Nombre</TableHead>
+            <TableHead className="text-center">Matricula</TableHead>
+            <TableHead className="text-center">CV</TableHead>
+            <TableHead className="text-center">Correo</TableHead>
+            <TableHead className="text-center">Estado</TableHead>
             <TableHead className="text-center">Acción</TableHead>
           </TableRow>
         </TableHeader>
+
         <TableBody>
           {currentAlumnos.map((nombre) => (
-            <TableRow key={nombre.user_name}>
+            <TableRow key={nombre.applicant_applicant_id}>
               <TableCell className="font-medium">{nombre.user_name} {nombre.user_paternal_sn}</TableCell>
               <TableCell>{nombre.student_matricula}</TableCell>
-              <TableCell>{nombre.student_cv_link}</TableCell>
+              <TableCell>
+                <Button variant="outline" style={{color: 'purple'}} onClick={() => downloadCV(nombre.student_cv_link)}>
+                  Ver CV
+                </Button>
+              </TableCell>
               <TableCell>{nombre.user_email}</TableCell>
-              <TableCell>{getStatus(nombre.applicant_status)}</TableCell>
+              <TableCell>{getStatusText(nombre.applicant_status)}</TableCell>
               <TableCell className="text-center">
                 <div>
                   <Button
@@ -135,6 +128,16 @@ function TableAlumnosApplicant() {
       </Pagination>
     </div>
   );
+}
+
+function getStatusText(statusNumber) {
+  const statusMap = {
+      0: <span style={{ color: "blue" }}>Pendiente</span>,
+      1: <span style={{ color: "green" }}>Aceptado</span>,
+      2: <span style={{ color: "red" }}>Rechazado</span>
+  };
+
+  return statusMap[statusNumber] || "Desconocido";
 }
 
 export default TableAlumnosApplicant;

@@ -16,15 +16,15 @@ export const getAdministrador = async () => {
 export const registerAdmins = async (numberA, name, pname, mname, mail, pass) => {
   const date = new Date();
   const user_json = {
-    user_type:'0',
-    user_number: parseInt(numberA, 10), 
-    name: name,
-    paternal_sn : pname,
-    maternal_sn : mname,
-    email: mail,
-    password : pass,
-    access_date: date.toString(),
-  };
+  user_type: '0',
+  user_number: parseInt(numberA, 10),
+  name: name,
+  paternal_sn: pname,
+  maternal_sn: mname,
+  email: mail,
+  password: pass,
+  access_date: date.toISOString(), // Utiliza toISOString() para obtener la fecha en formato ISO 8601
+};
   try {
     return await fetch(API.BASEURL + "/user", {
       method: "POST",
