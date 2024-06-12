@@ -11,8 +11,8 @@ function HomeEmpresa() {
     <div>
       <NavbarEmpresa />
       <div className="flex justify-center">
-        <div className="w-full max-w-6xl">
-          <Tabs defaultValue="revisar" className="mx-auto p-4">
+        <div className="w-full max-w-8xl">
+          <Tabs defaultValue="revisar" className="mx-auto p-4" >
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="revisar">Solicitudes de alumnos</TabsTrigger>
               <TabsTrigger value="empresas">Lista de alumnos</TabsTrigger>

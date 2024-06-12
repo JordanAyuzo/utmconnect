@@ -107,8 +107,8 @@ function TableOfertasEmpresa() {
                     offerWM: data.offer_work_mode,
                     offerAddress: data.offer_address,
                     offerResponsabilities: data.offer_responsabilities,
-                    startDate: data.offer_start_date,
-                    endDate: data.offer_end_date,
+                    startDate: data.offer_start_date.split('T')[0],
+                    endDate: data.offer_end_date.split('T')[0],
                 });
             }
         } catch (error) {
@@ -170,8 +170,8 @@ function TableOfertasEmpresa() {
                 <TableCell className="font-medium">{vacante.empresa_rfc}</TableCell>
                 <TableCell>{vacante.offer_name}</TableCell>
                 <TableCell>{vacante.offer_price}</TableCell>
-                <TableCell>{vacante.offer_start_date}</TableCell>
-                <TableCell>{vacante.offer_end_date}</TableCell>
+                <TableCell>{vacante.offer_start_date.split('T')[0]}</TableCell>
+                <TableCell>{vacante.offer_end_date.split('T')[0]}</TableCell>
                 <TableCell>{vacante.offer_work_mode}</TableCell>
                 <TableCell>{vacante.offer_address}</TableCell>
                 <TableCell className="text-right">
