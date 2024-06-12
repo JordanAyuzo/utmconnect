@@ -54,7 +54,7 @@ function TableAlumnosApplicantAcepted() {
         </TableHeader>
         <TableBody>
           {currentAlumnos.map((nombre) => (
-            <TableRow key={nombre.user_name}>
+            <TableRow key={nombre.applicant_applicant_id}>
               <TableCell className="font-medium">{nombre.user_name} {nombre.user_paternal_sn}</TableCell>
               <TableCell>{nombre.student_matricula}</TableCell>
               <TableCell>
