@@ -86,10 +86,6 @@ function registerAdmin() {
                 <TabsContent value="delete" className="flex justify-center">
                     <Card className=" w-full mx-auto m-4 ring-gray-100 ring-1 ring-opacity-20 shadow-2xl">
                         <CardHeader >
-                            <CardTitle>Registro de adminstrador</CardTitle>
-                            <CardDescription>
-                                Apartado para registrar a un administrador.
-                            </CardDescription>
                             <div className="flex justify-center items-center">
                             <Card className="border border-gray-400 w-[450px]">
                             <CardHeader>
